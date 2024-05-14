@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PizzaShop.Domain.Entities
 {
-    internal class PizzaIngredients
+    public class PizzaIngredients
     {
         public int PizzaId { get; set; }
         public int IngredientId { get; set; }
