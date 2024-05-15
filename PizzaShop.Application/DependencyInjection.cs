@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.VIewModel
+namespace PizzaShop.Application
 {
-    public class MainWindowViewModel
+    internal class DependencyInjection
     {
     }
 }

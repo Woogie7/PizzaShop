@@ -9,10 +9,9 @@ namespace PizzaShop.Domain.Entities
     {
         public string OrderNumber { get; set; }
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
 
-        // Внешний ключ для таблицы Пицца
         public int PizzaId { get; set; }
         public Pizza? Pizza { get; set; }
 

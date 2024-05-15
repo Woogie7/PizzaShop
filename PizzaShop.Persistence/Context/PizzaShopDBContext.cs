@@ -16,11 +16,12 @@ public class PizzaShopDBContext : DbContext
     public DbSet<Ingredient> Ingredients{ get; set; }
     public DbSet<Order> Orders{ get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Size> Size { get; set; }
+
+    public PizzaShopDBContext(DbContextOptions options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.
-
         base.OnConfiguring(optionsBuilder);
     }
 

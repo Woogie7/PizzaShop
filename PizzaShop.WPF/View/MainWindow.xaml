@@ -1,12 +1,14 @@
-﻿<Window x:Class="PizzaShop.MainWindow"
+﻿<Window x:Class="PizzaShop.WPF.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PizzaShop"
+        xmlns:local="clr-namespace:PizzaShop.WPF"
+        xmlns:view="clr-namespace:PizzaShop.WPF.View"
+        xmlns:vms="clr-namespace:PizzaShop.WPF.VIewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

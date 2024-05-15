@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Persistence.Context
 {
-    internal class PizzaShopDbContextFactory : IDesignTimeDbContextFactory<PizzaShopDBContext>
+    public class PizzaShopDbContextFactory : IDesignTimeDbContextFactory<PizzaShopDBContext>
     {
-        public PizzaShopDBContext CreateDbContext(string[] args)
+        public PizzaShopDBContext CreateDbContext(string[] args = null)
         {
             var options = new DbContextOptionsBuilder<PizzaShopDBContext>();
-            options.UseNpgsql("Server=(localdb)\\MSSQLLocalDB;Database=SimpleTraderDB;Trusted_Connection=True;");
+            options.UseNpgsql("Host=localhost; Port=5432; Database=PizzaShop; Username=postgres; Password=1234");
 
-            return new SimpleTraderDbContext(options.Options);
+            return new PizzaShopDBContext(options.Options);
         }
     }
 }
