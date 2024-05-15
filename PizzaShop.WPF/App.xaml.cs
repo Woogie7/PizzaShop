@@ -58,7 +58,6 @@ namespace PizzaShop.WPF
             navigationService.Navigate();
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
-            MainWindow.Show();
 
             base.OnStartup(e);
         }

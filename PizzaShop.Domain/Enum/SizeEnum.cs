@@ -6,8 +6,8 @@ namespace PizzaShop.Domain.Enum
 {
     public enum SizeEnum
     {
-        Small = 1, 
-        Medium = 2,
-        Large = 3
+        Маленькая = 1, 
+        Средняя = 2,
+        Большая = 3
     }
 }

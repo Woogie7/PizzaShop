@@ -24,22 +24,7 @@ namespace PizzaShop.Persistence.Repositories
             _contextFactory = contextFactory;
             _mapper = mapper;
         }
-        public Task<Pizza> AddAsync(Pizza entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<PizzaDto>> GetAllAsync()
+        public async Task<Pizza> AddAsync(Pizza entity)
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
@@ -63,11 +48,33 @@ namespace PizzaShop.Persistence.Repositories
                 await context.AddAsync(pizza);
                 await context.SaveChangesAsync();
 
+                return pizza;
+            }
+        }
 
+        public Task DeleteAllAsync()
+        {
+            throw new NotImplementedException();
+        }
 
-                IEnumerable<Pizza> entities = await context.Pizzas.ToListAsync();
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
 
-                //.Include(p => p.Ingredients)
+        public async Task<IEnumerable<PizzaDto>> GetAllAsync()
+        {
+            using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+
+                IEnumerable<Pizza> entities = await context.Pizzas
+                    .AsNoTracking()
+                    .Include(p => p.Ingredients)
+                    .Include(p => p.Category)
+                    .Include(p => p.Size)
+                    .ToListAsync();
+
+                
 
                 var pizzas = entities.Select(income => _mapper.Map<PizzaDto>(income));
 

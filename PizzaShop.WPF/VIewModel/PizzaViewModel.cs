@@ -15,13 +15,22 @@ namespace PizzaShop.WPF.VIewModel
         private readonly IPizzaService _pizzaService;
 
         public ObservableCollection<PizzaDto> Pizzas { get; set; }
+
+        public string TextTest { get; set; }
         public PizzaViewModel(IPizzaService pizzaService)
         {
             _pizzaService = pizzaService;
 
             Pizzas = new ObservableCollection<PizzaDto>();
+            TextTest = "Хуесос";
 
             LoadPizza();
+
+
+            Pizzas.Add(new PizzaDto { Name = "Маргарита", Ingredients = new[] { "Соус", "Сыр", "Базилик" }, Size = "Средняя", Category = "Классические", Price = 250, Description = "Классическая и всегда популярная пицца с соусом, сыром и базиликом." });
+            Pizzas.Add(new PizzaDto { Name = "Пепперони", Ingredients = new[] { "Соус", "Сыр", "Пепперони" }, Size = "Большая", Category = "Мясные", Price = 300, Description = "Сытная пицца с острой колбасой пепперони." });
+            Pizzas.Add(new PizzaDto { Name = "Гавайская", Ingredients = new[] { "Соус", "Сыр", "Ветчина", "Ананасы" }, Size = "Средняя", Category = "Фруктовые", Price = 280, Description = "Нежная и сладкая пицца с ветчиной и ананасами." });
+            Pizzas.Add(new PizzaDto { Name = "Новая", Ingredients = new[] { "Соус", "Сыр", "Ветчина", "Ананасы" }, Size = "Средняя", Category = "Фруктовые", Price = 280, Description = "Нежная и сладкая пицца с ветчиной и ананасами." });
         }
 
         public async Task LoadPizza()

@@ -19,6 +19,10 @@ namespace PizzaShop.WPF.Service
 
         public async Task<IEnumerable<PizzaDto>> GetPizzaAllAsync()
         {
+
+
+            //await _repository.AddAsync(null);
+
             return await _repository.GetAllAsync();
         }
     }

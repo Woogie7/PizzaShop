@@ -13,7 +13,7 @@ internal class PizzaProfile : Profile
             .ForMember(crtI => crtI.Price, i => i.MapFrom(x => x.Price))
             .ForMember(crtI => crtI.Size, i => i.MapFrom(x => x.Size.Name))
             .ForMember(crtI => crtI.Category, i => i.MapFrom(x => x.Category.Name))
-            .ForMember(crtI => crtI.Ingredients, i => i.MapFrom(x => x.Ingredients))
+            .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.Ingredients.Select(i => i.Name).ToArray()))
             .ForMember(crtI => crtI.Description, i => i.MapFrom(x => x.Description));
 
         //CreateMap<PizzaDto, Pizza>()
