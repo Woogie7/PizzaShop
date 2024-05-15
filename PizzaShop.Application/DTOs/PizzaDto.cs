@@ -18,5 +18,7 @@ namespace PizzaShop.Application.DTOs
         public decimal Price { get; set; }
 
         public string Description { get; set; }
+
+        public string ImageSource { get; set; }
     }
 }

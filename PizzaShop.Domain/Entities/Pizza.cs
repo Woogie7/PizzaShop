@@ -22,6 +22,15 @@ namespace PizzaShop.Domain.Entities
 
         public string Description { get; set; }
 
-        //public string Image { get; set; }
+        private string _imagePath;
+
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set
+            {
+                _imagePath = string.IsNullOrWhiteSpace(value) ? "../Images/defaultPizza.jpg" : value;
+            }
+        }
     }
 }
