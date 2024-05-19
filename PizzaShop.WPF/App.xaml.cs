@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PizzaShop.Application.Interface;
+using PizzaShop.Infrastructure;
 using PizzaShop.Persistence.Context;
 using PizzaShop.Persistence.Repositories;
 using PizzaShop.WPF.Service;
@@ -43,6 +44,8 @@ namespace PizzaShop.WPF
                     {
                         DataContext = s.GetRequiredService<MainWindowViewModel>()
                     });
+
+                    service.AddScoped<IPasswordHasher, PasswordHasher>();
 
                     service.AddScoped<IPizzaService, PizzaService>();
                     service.AddScoped<IPizzaRepository, PizzaRepository>();

@@ -18,6 +18,8 @@ public class PizzaShopDBContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Size> Size { get; set; }
 
+    public DbSet<Role> Roles { get; set; }
+
     public PizzaShopDBContext(DbContextOptions options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,5 +35,6 @@ public class PizzaShopDBContext : DbContext
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
     }
 }

@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaShop.WPF", "PizzaShop.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaShop.Application", "PizzaShop.Application\PizzaShop.Application.csproj", "{30541C4E-6F30-4B41-85E7-C178D44B9A8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaShop.Infrastructure", "PizzaShop.Infrastructure\PizzaShop.Infrastructure.csproj", "{6DFD7E83-7807-4EAC-BB26-76FB143EA7CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{30541C4E-6F30-4B41-85E7-C178D44B9A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30541C4E-6F30-4B41-85E7-C178D44B9A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30541C4E-6F30-4B41-85E7-C178D44B9A8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DFD7E83-7807-4EAC-BB26-76FB143EA7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DFD7E83-7807-4EAC-BB26-76FB143EA7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DFD7E83-7807-4EAC-BB26-76FB143EA7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DFD7E83-7807-4EAC-BB26-76FB143EA7CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{9F657E02-FC5A-455A-80FF-A2ABB31033FB} = {4D9FC7F1-5D6C-4C59-B7B1-889F706B1A04}
 		{0175CC4F-38A5-4474-A7A1-B5BE65AAD424} = {3E987539-81B8-4EAF-848B-1CD5E8E1FC67}
 		{30541C4E-6F30-4B41-85E7-C178D44B9A8E} = {5A48E0D9-3768-4DFE-B5BC-7B406C40594E}
+		{6DFD7E83-7807-4EAC-BB26-76FB143EA7CB} = {4D9FC7F1-5D6C-4C59-B7B1-889F706B1A04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF0F595E-159C-49BF-B3F0-51ACABD89CA7}

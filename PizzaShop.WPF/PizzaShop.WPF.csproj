@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PizzaShop.Infrastructure\PizzaShop.Infrastructure.csproj" />
     <ProjectReference Include="..\PizzaShop.Persistence\PizzaShop.Persistence.csproj" />
   </ItemGroup>
 
