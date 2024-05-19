@@ -6,21 +6,28 @@
              xmlns:local="clr-namespace:PizzaShop.WPF.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Border Name="LogInBorder">
-            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                <TextBlock Text="Вход"/>
+    <Grid Margin="50" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Name="LogInBorder" BorderThickness="3" BorderBrush="Orange" CornerRadius="5" Padding="20">
+            <StackPanel>
+                <TextBlock Text="Вход" HorizontalAlignment="Center" FontSize="28"/>
                 <DockPanel>
-                    <TextBlock Text="Логин: " />
-                    <TextBox Name="LogLoginBox" MaxLength="50" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Логин: " Width="100" Margin="10" FontSize="24"/>
+                    <TextBox Name="LogLoginBox" Width="250" Margin="10" FontSize="24"
+                             MaxLength="50" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
                 </DockPanel>
                 <DockPanel>
-                    <TextBlock Text="Пароль: "/>
-                    <PasswordBox Name="LogPasswordBox" MaxLength="50" PasswordChanged="PasswordBox_PasswordChanged"/>
+                    <TextBlock Text="Пароль: " Width="100" Margin="10" FontSize="24"/>
+                    <PasswordBox Name="LogPasswordBox" Width="250" Margin="10" FontSize="24"
+                                 MaxLength="50" PasswordChanged="PasswordBox_PasswordChanged"/>
                 </DockPanel>
+                <TextBlock HorizontalAlignment="Center" FontSize="12">
+                    <Hyperlink Command="{Binding RegisterNavigationCommand}">
+                        Зарегистрироваться
+                    </Hyperlink>
+                </TextBlock>
                 <Button Content="Вход" Command="{Binding LoginCommand}" 
                      Name="EnterButton" IsDefault="True" 
-                     HorizontalAlignment="Center"/>
+                     HorizontalAlignment="Center" Width="75" Height="30" Margin="10"/>
             </StackPanel>
         </Border>
     </Grid>

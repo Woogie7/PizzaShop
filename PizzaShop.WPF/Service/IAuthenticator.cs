@@ -1,5 +1,6 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Domain.Entities;
+using PizzaShop.WPF.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

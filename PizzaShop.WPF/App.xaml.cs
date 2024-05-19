@@ -47,8 +47,13 @@ namespace PizzaShop.WPF
                     service.AddSingleton<Func<LoginViewModel>>(s => () => s.GetRequiredService<LoginViewModel>());
                     service.AddSingleton<NavigationService<LoginViewModel>>();
 
+                    service.AddTransient<RegisterViewModel>();
+                    service.AddSingleton<Func<RegisterViewModel>>(s => () => s.GetRequiredService<RegisterViewModel>());
+                    service.AddSingleton<NavigationService<RegisterViewModel>>();
+
                     service.AddSingleton<NavigationService<PizzaViewModel>>();
                     service.AddSingleton<NavigationService<LoginViewModel>>();
+                    service.AddSingleton<NavigationService<RegisterViewModel>>();
 
                     service.AddSingleton<MainWindow>(s => new MainWindow()
                     {

@@ -2,6 +2,7 @@
 using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Core;
 using PizzaShop.WPF.Service;
+using PizzaShop.WPF.Service.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,17 @@ using System.Windows.Input;
 
 namespace PizzaShop.WPF.VIewModel
 {
-    public class LoginViewModel : ObservaleObject
+    internal class LoginViewModel : ObservaleObject
     {
         private readonly IAuthenticator _authenticator;
         private UserDto _user;
 
-        public LoginViewModel(IAuthenticator authenticator)
-        {
-            _authenticator = authenticator;
-            User = new UserDto();
-            LoginCommand = new LoginCommand(_authenticator, this);
-        }
 
+
+        public ICommand LoginCommand { get; }
+        public ICommand RegisterNavigationCommand { get; }
+
+        #region Свойства
         public UserDto User
         {
             get => _user;
@@ -36,7 +36,7 @@ namespace PizzaShop.WPF.VIewModel
             }
         }
 
-        public ICommand LoginCommand { get; }
+
 
         public string Email
         {
@@ -62,6 +62,15 @@ namespace PizzaShop.WPF.VIewModel
                     OnPropertyChanged();
                 }
             }
+        }
+        #endregion
+
+        public LoginViewModel(IAuthenticator authenticator, NavigationService<RegisterViewModel> navigationService)
+        {
+            _authenticator = authenticator;
+            User = new UserDto();
+            LoginCommand = new LoginCommand(_authenticator, this);
+            RegisterNavigationCommand = new NavigateCommand<RegisterViewModel>(navigationService);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Application.Interface;
 using PizzaShop.Domain.Entities;
+using PizzaShop.WPF.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.WPF.Service
 {
-    class Authenticator : IAuthenticator
+    class Authenticator : ObservaleObject, IAuthenticator
     {
         private readonly IAuthenticationService _authenticationService;
 
@@ -18,7 +19,21 @@ namespace PizzaShop.WPF.Service
             _authenticationService = authenticationService;
         }
 
-        public User CurrentUser {  get; private set; }
+        private User _currentUser;
+
+        public User CurrentUser
+        {
+            get
+            {
+                return _currentUser;
+            }
+            private set
+            {
+                _currentUser = value;
+                OnPropertyChanged(nameof(CurrentUser));
+                OnPropertyChanged(nameof(IsLoggedIn));
+            }
+        }
 
         public bool IsLoggedIn => CurrentUser != null;
 
