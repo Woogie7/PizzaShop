@@ -14,7 +14,7 @@
 
         <TextBox Margin="20" Grid.Row="0" Text="{Binding PizzaFilter, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <ItemsControl ItemsSource="{Binding Pizzas}" Margin="50" HorizontalAlignment="Center" Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding Pizzas1}" Margin="50" HorizontalAlignment="Center" Grid.Row="1">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border 

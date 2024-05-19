@@ -6,11 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.Application.Interface
+namespace PizzaShop.WPF.Service
 {
-    public interface IAuthenticationService
+    public interface IAuthenticator
     {
+        User CurrentUser { get; }
+        bool IsLoggedIn { get; }
         Task<bool> Register(CreateUserDto userDto);
         Task<User> Login(UserDto userDto);
+        void Logout();
+
     }
 }

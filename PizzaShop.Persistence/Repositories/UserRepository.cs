@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Persistence.Repositories
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly IMapper _mapper;
 
@@ -31,12 +31,32 @@ namespace PizzaShop.Persistence.Repositories
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
                 var role = await context.Roles.FirstOrDefaultAsync(r => r.Id == (int)RoleEnum.Admin);
+
+                var newUser = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Email = user.Email,
+                    PasswordHash = user.PasswordHash,
+                    Role = role,
+                    UserName = user.UserName,
+                    RoleId = role.Id
+                };
+
+                await context.AddAsync(newUser);
+                await context.SaveChangesAsync();
             }
         }
 
-        public Task<User> GetUserByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
+            using(PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+                var user = await context.Users
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(user => user.Email == email);
+
+                return user;
+            }
         }
     }
 }

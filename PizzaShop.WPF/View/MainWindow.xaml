@@ -12,7 +12,11 @@
         <DataTemplate DataType="{x:Type vms:PizzaViewModel}">
             <view:PizzaView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:LoginViewModel}">
+            <view:LoginView/>
+        </DataTemplate>
     </Window.Resources>
+    
     <Grid>
         <TextBlock Text="Привет"></TextBlock>
         <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>

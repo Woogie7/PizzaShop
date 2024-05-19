@@ -1,15 +1,10 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Application.Interface;
 using PizzaShop.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PizzaShop.WPF.Service.Authentication
+namespace PizzaShop.Infrastructure.Authentication
 {
-    class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IPasswordHasher _hasher;
         private readonly IUserRepository _userRepository;
@@ -20,14 +15,31 @@ namespace PizzaShop.WPF.Service.Authentication
             _userRepository = userRepository;
         }
 
-        public Task<User> Login(string email, string password)
+        public async Task<User> Login(UserDto userDto)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserByEmail(userDto.Email);
+
+            var result = _hasher.IsVerify(userDto.PasswordHash, user.PasswordHash);
+
+            if (!result)
+            {
+                throw new Exception("Faild to login");
+            }
+
+            return user;
         }
 
         public async Task<bool> Register(CreateUserDto userDto)
         {
             var hashedPassword = _hasher.GeneratePassword(userDto.PasswordHash);
+
+            var userEmail = _userRepository.GetUserByEmail(userDto.Email);
+
+            if (userEmail != null)
+            {
+                throw new Exception("Почта занята");
+            }
+
 
             var user = new CreateUserDto
             {

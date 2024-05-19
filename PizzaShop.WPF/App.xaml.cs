@@ -11,6 +11,7 @@ using PizzaShop.WPF.View;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Windows;
+using PizzaShop.Infrastructure.Authentication;
 
 namespace PizzaShop.WPF
 {
@@ -32,32 +33,42 @@ namespace PizzaShop.WPF
 
                     service.AddSingleton<NavigationStore>();
 
+                    service.AddSingleton<IPasswordHasher, PasswordHasher>();
+                    service.AddSingleton<IAuthenticationService, AuthenticationService>();
+
                     service.AddSingleton<MainWindowViewModel>();
+
 
                     service.AddTransient<PizzaViewModel>();
                     service.AddSingleton<Func<PizzaViewModel>>(s => () => s.GetRequiredService<PizzaViewModel>());
                     service.AddSingleton<NavigationService<PizzaViewModel>>();
 
+                    service.AddTransient<LoginViewModel>();
+                    service.AddSingleton<Func<LoginViewModel>>(s => () => s.GetRequiredService<LoginViewModel>());
+                    service.AddSingleton<NavigationService<LoginViewModel>>();
+
                     service.AddSingleton<NavigationService<PizzaViewModel>>();
+                    service.AddSingleton<NavigationService<LoginViewModel>>();
 
                     service.AddSingleton<MainWindow>(s => new MainWindow()
                     {
                         DataContext = s.GetRequiredService<MainWindowViewModel>()
                     });
 
-                    service.AddScoped<IPasswordHasher, PasswordHasher>();
+                    service.AddScoped<IAuthenticator, Authenticator>();
 
                     service.AddScoped<IPizzaService, PizzaService>();
                     service.AddScoped<IPizzaRepository, PizzaRepository>();
+                    service.AddScoped<IUserRepository, UserRepository>();
                 })
                 .Build();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _host.Start();
+            _host.Start();            
 
-            NavigationService<PizzaViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<PizzaViewModel>>();
+            NavigationService<LoginViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<LoginViewModel>>();
             navigationService.Navigate();
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
