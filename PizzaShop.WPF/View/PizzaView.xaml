@@ -6,8 +6,15 @@
              xmlns:local="clr-namespace:PizzaShop.WPF.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
-        <ItemsControl ItemsSource="{Binding Pizzas}" Margin="50" HorizontalAlignment="Center">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Margin="20" Grid.Row="0" Text="{Binding PizzaFilter, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <ItemsControl ItemsSource="{Binding Pizzas}" Margin="50" HorizontalAlignment="Center" Grid.Row="1">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border 
