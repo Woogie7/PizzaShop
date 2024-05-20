@@ -27,6 +27,8 @@ namespace PizzaShop.WPF.Command
         public override async void Execute(object parameter)
         {
             var succes = await _authenticator.Login(_loginViewModel.User);
+
+            _loginViewModel.PizzaNavigationCommand.Execute(succes);
         }
     }
 }

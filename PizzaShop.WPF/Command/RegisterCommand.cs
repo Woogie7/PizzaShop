@@ -1,4 +1,6 @@
 ﻿using PizzaShop.WPF.Core;
+using PizzaShop.WPF.Service;
+using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,24 @@ namespace PizzaShop.WPF.Command
 {
     class RegisterCommand : BaseCommand
     {
-        public override void Execute(object parameter)
+        private readonly IAuthenticator _authenticator;
+        private readonly RegisterViewModel _registerViewModel;
+
+        public RegisterCommand(IAuthenticator authenticator, RegisterViewModel registerViewModel)
         {
-            throw new NotImplementedException();
+            _authenticator = authenticator;
+            _registerViewModel = registerViewModel;
+        }
+
+        //public override bool CanExecute(object parameter)
+        //{
+            //return _registerViewModel.CanRegister && base.CanExecute(parameter); ;
+        //}
+        public override async void Execute(object parameter)
+        {
+            var succes = await _authenticator.Register(_registerViewModel.User);
+
+            _registerViewModel.PizzaNavigationCommand.Execute(succes);
         }
     }
 }

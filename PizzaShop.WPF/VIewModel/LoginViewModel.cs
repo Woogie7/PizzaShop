@@ -21,6 +21,7 @@ namespace PizzaShop.WPF.VIewModel
 
         public ICommand LoginCommand { get; }
         public ICommand RegisterNavigationCommand { get; }
+        public ICommand PizzaNavigationCommand { get; }
 
         #region Свойства
         public UserDto User
@@ -65,12 +66,13 @@ namespace PizzaShop.WPF.VIewModel
         }
         #endregion
 
-        public LoginViewModel(IAuthenticator authenticator, NavigationService<RegisterViewModel> navigationService)
+        public LoginViewModel(IAuthenticator authenticator, NavigationService<PizzaViewModel> navigationServicePizza, NavigationService<RegisterViewModel> navigationServiceReg)
         {
             _authenticator = authenticator;
             User = new UserDto();
             LoginCommand = new LoginCommand(_authenticator, this);
-            RegisterNavigationCommand = new NavigateCommand<RegisterViewModel>(navigationService);
+            PizzaNavigationCommand = new NavigateCommand<PizzaViewModel>(navigationServicePizza);
+            RegisterNavigationCommand = new NavigateCommand<RegisterViewModel>(navigationServiceReg);
         }
     }
 }

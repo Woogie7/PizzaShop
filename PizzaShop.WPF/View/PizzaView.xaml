@@ -11,10 +11,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <TextBox Margin="20" Grid.Row="0" Text="{Binding PizzaFilter, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <ItemsControl ItemsSource="{Binding Pizzas1}" Margin="50" HorizontalAlignment="Center" Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding Pizzas}" Margin="50" HorizontalAlignment="Center" Grid.Row="1">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border 
@@ -32,7 +32,7 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <Image Source="/View/Pizza3.jpg" Grid.Row="0" Height="200" />
+                            <Image Source="/View/Pizza4.jpg" Grid.Row="0" Height="200" />
 
                             <TextBlock Text="{Binding Name}" FontSize="20" Foreground="Black" Grid.Row="1"/>
 

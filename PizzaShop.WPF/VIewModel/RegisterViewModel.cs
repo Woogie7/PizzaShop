@@ -32,69 +32,69 @@ namespace PizzaShop.WPF.VIewModel
                 }
             }
         }
-        private string _email;
+
+        public string UserName
+        {
+            get => User.UserName;
+            set
+            {
+                if (User.UserName != value)
+                {
+                    User.UserName = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CanRegister));
+                }
+            }
+        }
+
         public string Email
         {
-            get
-            {
-                return _email;
-            }
+            get => User.Email;
             set
             {
-                _email = value;
-                OnPropertyChanged(nameof(Email));
-                OnPropertyChanged(nameof(CanRegister));
+                if (User.Email != value)
+                {
+                    User.Email = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CanRegister));
+                }
             }
         }
 
-        private string _username;
-        public string Username
+        public string PasswordHash
         {
-            get
-            {
-                return _username;
-            }
+            get => User.PasswordHash;
             set
             {
-                _username = value;
-                OnPropertyChanged(nameof(Username));
-                OnPropertyChanged(nameof(CanRegister));
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-            set
-            {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
-                OnPropertyChanged(nameof(CanRegister));
+                if (User.PasswordHash != value)
+                {
+                    User.PasswordHash = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CanRegister));
+                }
             }
         }
 
         #endregion
 
         public bool CanRegister => !string.IsNullOrEmpty(Email) &&
-            !string.IsNullOrEmpty(Username) &&
-            !string.IsNullOrEmpty(Password);
+            !string.IsNullOrEmpty(UserName) &&
+            !string.IsNullOrEmpty(PasswordHash);
 
         public ICommand RegisterCommand { get; }
 
         public ICommand LoginNavigationCommand { get; }
+        public ICommand PizzaNavigationCommand { get; }
 
-        public RegisterViewModel(IAuthenticator authenticator, NavigationService<LoginViewModel> navigationService)
+        public RegisterViewModel(IAuthenticator authenticator, NavigationService<PizzaViewModel> navigationServicePizza, NavigationService<LoginViewModel> navigationServiceLogin)
         {
 
             _authenticator = authenticator;
             User = new CreateUserDto();
 
-            RegisterCommand = new RegisterCommand();
-            LoginNavigationCommand = new NavigateCommand<LoginViewModel>(navigationService);
+            RegisterCommand = new RegisterCommand(_authenticator, this);
+            PizzaNavigationCommand = new NavigateCommand<PizzaViewModel>(navigationServicePizza);
+            LoginNavigationCommand = new NavigateCommand<LoginViewModel>(navigationServiceLogin);
         }
 
     }

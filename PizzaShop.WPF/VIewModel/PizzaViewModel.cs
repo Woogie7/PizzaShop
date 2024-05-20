@@ -1,6 +1,7 @@
 ﻿using PizzaShop.Application.DTOs;
 using PizzaShop.Application.Interface;
 using PizzaShop.WPF.Core;
+using PizzaShop.WPF.Service;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace PizzaShop.WPF.VIewModel
     class PizzaViewModel : ObservaleObject
     {
         private readonly IPizzaService _pizzaService;
+        private readonly IAuthenticator _authenticator;
 
         public ObservableCollection<PizzaDto> Pizzas { get; set; }
         public ICollectionView PizzaCollectionView { get; }
@@ -30,9 +32,9 @@ namespace PizzaShop.WPF.VIewModel
                 PizzaCollectionView.Refresh();
             }
         }
-        public PizzaViewModel(IPizzaService pizzaService)
+        public PizzaViewModel(IPizzaService pizzaService, IAuthenticator authenticator)
         {
-
+            _authenticator = authenticator;
             _pizzaService = pizzaService;
             Pizzas = new ObservableCollection<PizzaDto>();
             PizzaCollectionView = CollectionViewSource.GetDefaultView(Pizzas);
@@ -41,6 +43,7 @@ namespace PizzaShop.WPF.VIewModel
             PizzaCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PizzaDto.Name)));
 
             LoadPizza();
+            _authenticator = authenticator;
         }
 
         private bool FillterPizzas(object obj)

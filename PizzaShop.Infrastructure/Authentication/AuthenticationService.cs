@@ -35,7 +35,7 @@ namespace PizzaShop.Infrastructure.Authentication
 
             var userEmail = _userRepository.GetUserByEmail(userDto.Email);
 
-            if (userEmail != null)
+            if (userEmail.Result.Email != null)
             {
                 throw new Exception("Почта занята");
             }

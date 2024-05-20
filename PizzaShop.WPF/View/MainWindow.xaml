@@ -21,7 +21,10 @@
     </Window.Resources>
     
     <Grid>
-        <TextBlock Text="Привет"></TextBlock>
+        <TextBlock Margin="10">
+            <Run Text="Привет"/>
+            <Run Text="{Binding NameUser}"/>
+        </TextBlock>
         <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>

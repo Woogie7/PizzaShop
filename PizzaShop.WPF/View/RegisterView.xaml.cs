@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaShop.WPF.VIewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,16 @@ namespace PizzaShop.WPF.View
             InitializeComponent();
         }
 
-        private void RegisterPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            if (DataContext is RegisterViewModel viewModel)
+            {
+                var passwordBox = sender as PasswordBox;
+                if (passwordBox != null)
+                {
+                    viewModel.PasswordHash = passwordBox.Password;
+                }
+            }
         }
     }
 }

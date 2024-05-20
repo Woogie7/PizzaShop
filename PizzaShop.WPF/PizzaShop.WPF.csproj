@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="View\Pizza4.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.19">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,6 +28,10 @@
   <ItemGroup>
     <ProjectReference Include="..\PizzaShop.Infrastructure\PizzaShop.Infrastructure.csproj" />
     <ProjectReference Include="..\PizzaShop.Persistence\PizzaShop.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Pizza4.jpg" />
   </ItemGroup>
 
 </Project>
