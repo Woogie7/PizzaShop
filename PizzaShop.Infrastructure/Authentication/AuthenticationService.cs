@@ -1,7 +1,9 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Application.Interface;
 using PizzaShop.Domain.Entities;
+using PizzaShop.Domain.Enum;
 using PizzaShop.Domain.Exceptions;
+using System.Security.Principal;
 
 namespace PizzaShop.Infrastructure.Authentication
 {
@@ -35,28 +37,32 @@ namespace PizzaShop.Infrastructure.Authentication
             return user;
         }
 
-        public async Task<bool> Register(CreateUserDto userDto)
+        public async Task<RegistrationResult> Register(CreateUserDto userDto)
         {
-            var hashedPassword = _hasher.GeneratePassword(userDto.PasswordHash);
+            RegistrationResult registrationResult = RegistrationResult.Success;
 
-            var userEmail = _userRepository.GetUserByEmail(userDto.Email);
+            var user = await _userRepository.GetUserByEmail(userDto.Email);
 
-            if (userEmail.Result.Email != null)
+            if (user != null)
             {
-                throw new Exception("Почта занята");
+                registrationResult = RegistrationResult.EmailAlreadyExists;
             }
 
-
-            var user = new CreateUserDto
+            if (registrationResult == RegistrationResult.Success)
             {
-                Email = userDto.Email,
-                UserName = userDto.UserName,
-                PasswordHash = hashedPassword,
-            };
+                var hashedPassword = _hasher.GeneratePassword(userDto.PasswordHash);
 
-            await _userRepository.Add(user);
+                var newUser = new CreateUserDto
+                {
+                    Email = userDto.Email,
+                    UserName = userDto.UserName,
+                    PasswordHash = hashedPassword,
+                };
 
-            return true;
+                await _userRepository.Add(newUser);
+            }
+
+            return registrationResult;
         }
     }
 }

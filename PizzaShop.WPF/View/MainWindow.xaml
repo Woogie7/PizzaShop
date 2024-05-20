@@ -7,7 +7,7 @@
         xmlns:view="clr-namespace:PizzaShop.WPF.View"
         xmlns:vms="clr-namespace:PizzaShop.WPF.VIewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1100">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:PizzaViewModel}">
             <view:PizzaView/>

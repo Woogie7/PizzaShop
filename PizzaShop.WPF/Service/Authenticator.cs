@@ -1,6 +1,7 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Application.Interface;
 using PizzaShop.Domain.Entities;
+using PizzaShop.Domain.Enum;
 using PizzaShop.WPF.Core;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace PizzaShop.WPF.Service
             CurrentUser = null;
         }
 
-        public async Task<bool> Register(CreateUserDto userDto)
+        public async Task<RegistrationResult> Register(CreateUserDto userDto)
         {
             return await _authenticationService.Register(userDto);
         }

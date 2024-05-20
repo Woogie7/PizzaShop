@@ -12,6 +12,7 @@ using PizzaShop.WPF.VIewModel;
 using System;
 using System.Windows;
 using PizzaShop.Infrastructure.Authentication;
+using PizzaShop.WPF.HostBuilders;
 
 namespace PizzaShop.WPF
 {
@@ -26,42 +27,18 @@ namespace PizzaShop.WPF
         public App()
         {
             _host = Host.CreateDefaultBuilder()
+                .AddViewModels()
                 .ConfigureServices((context, service) =>
                 {
                     service.AddSingleton<PizzaShopDbContextFactory>();
+
                     service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+                    service.AddSingleton<IPasswordHasher, PasswordHasher>();
 
                     service.AddSingleton<NavigationStore>();
 
-                    service.AddSingleton<IPasswordHasher, PasswordHasher>();
                     service.AddSingleton<IAuthenticationService, AuthenticationService>();
-
-                    service.AddSingleton<MainWindowViewModel>();
-
-
-                    service.AddTransient<PizzaViewModel>();
-                    service.AddSingleton<Func<PizzaViewModel>>(s => () => s.GetRequiredService<PizzaViewModel>());
-                    service.AddSingleton<NavigationService<PizzaViewModel>>();
-
-                    service.AddTransient<LoginViewModel>();
-                    service.AddSingleton<Func<LoginViewModel>>(s => () => s.GetRequiredService<LoginViewModel>());
-                    service.AddSingleton<NavigationService<LoginViewModel>>();
-
-                    service.AddTransient<RegisterViewModel>();
-                    service.AddSingleton<Func<RegisterViewModel>>(s => () => s.GetRequiredService<RegisterViewModel>());
-                    service.AddSingleton<NavigationService<RegisterViewModel>>();
-
-                    service.AddSingleton<NavigationService<PizzaViewModel>>();
-                    service.AddSingleton<NavigationService<LoginViewModel>>();
-                    service.AddSingleton<NavigationService<RegisterViewModel>>();
-
-                    service.AddSingleton<MainWindow>(s => new MainWindow()
-                    {
-                        DataContext = s.GetRequiredService<MainWindowViewModel>()
-                    });
-
                     service.AddScoped<IAuthenticator, Authenticator>();
-
                     service.AddScoped<IPizzaService, PizzaService>();
                     service.AddScoped<IPizzaRepository, PizzaRepository>();
                     service.AddScoped<IUserRepository, UserRepository>();

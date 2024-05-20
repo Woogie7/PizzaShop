@@ -1,5 +1,6 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Domain.Entities;
+using PizzaShop.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace PizzaShop.Application.Interface
 {
     public interface IAuthenticationService
     {
-        Task<bool> Register(CreateUserDto userDto);
+        Task<RegistrationResult> Register(CreateUserDto userDto);
         Task<User> Login(UserDto userDto);
     }
 }

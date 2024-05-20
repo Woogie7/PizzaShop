@@ -82,18 +82,25 @@ namespace PizzaShop.WPF.VIewModel
             !string.IsNullOrEmpty(PasswordHash);
 
         public ICommand RegisterCommand { get; }
-
         public ICommand LoginNavigationCommand { get; }
         public ICommand PizzaNavigationCommand { get; }
 
-        public RegisterViewModel(IAuthenticator authenticator, NavigationService<PizzaViewModel> navigationServicePizza, NavigationService<LoginViewModel> navigationServiceLogin)
+        public MessageViewModel ErrorMessageViewModel { get; }
+
+        public string ErrorMessage
+        {
+            set => ErrorMessageViewModel.Message = value;
+        }
+
+        public RegisterViewModel(IAuthenticator authenticator, NavigationService<LoginViewModel> navigationServiceLogin)
         {
 
             _authenticator = authenticator;
             User = new CreateUserDto();
 
+            ErrorMessageViewModel = new MessageViewModel();
+
             RegisterCommand = new RegisterCommand(_authenticator, this);
-            PizzaNavigationCommand = new NavigateCommand<PizzaViewModel>(navigationServicePizza);
             LoginNavigationCommand = new NavigateCommand<LoginViewModel>(navigationServiceLogin);
         }
 

@@ -1,5 +1,6 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Domain.Entities;
+using PizzaShop.Domain.Enum;
 using PizzaShop.WPF.Core;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace PizzaShop.WPF.Service
     {
         User CurrentUser { get; }
         bool IsLoggedIn { get; }
-        Task<bool> Register(CreateUserDto userDto);
+        Task<RegistrationResult> Register(CreateUserDto userDto);
         Task<User> Login(UserDto userDto);
         void Logout();
 

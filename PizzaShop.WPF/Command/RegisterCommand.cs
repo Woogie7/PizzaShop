@@ -1,4 +1,5 @@
-﻿using PizzaShop.WPF.Core;
+﻿using PizzaShop.Domain.Enum;
+using PizzaShop.WPF.Core;
 using PizzaShop.WPF.Service;
 using PizzaShop.WPF.VIewModel;
 using System;
@@ -26,9 +27,35 @@ namespace PizzaShop.WPF.Command
         //}
         public override async Task ExecuteAsync(object parameter)
         {
-            var succes = await _authenticator.Register(_registerViewModel.User);
+            _registerViewModel.ErrorMessage = string.Empty;
 
-            _registerViewModel.PizzaNavigationCommand.Execute(succes);
+            try
+            {
+                var succes = await _authenticator.Register(_registerViewModel.User);
+
+
+                switch (succes)
+                {
+                    case RegistrationResult.Success:
+                        _registerViewModel.LoginNavigationCommand.Execute(succes);
+                        break;
+                    case RegistrationResult.PasswordsDoNotMatch:
+                        _registerViewModel.ErrorMessage = "Неправильный пароль.";
+                        break;
+                    case RegistrationResult.EmailAlreadyExists:
+                        _registerViewModel.ErrorMessage = "Email уже используеться.";
+                        break;
+                    default:
+                        _registerViewModel.ErrorMessage = "Ошибка регистрации.";
+                        break;
+                }
+
+                
+            }
+            catch(Exception)
+            {
+                _registerViewModel.ErrorMessage = "Ошибка регистрации.";
+            }
         }
     }
 }
