@@ -32,6 +32,18 @@ namespace PizzaShop.WPF.VIewModel
                 PizzaCollectionView.Refresh();
             }
         }
+
+        private bool _isAdmin = false;
+        public bool IsAdmin
+        {
+            get { return _isAdmin; }
+            set
+            {
+                _isAdmin = value;
+                OnPropertyChanged(nameof(IsAdmin));
+            }
+        }
+
         public PizzaViewModel(IPizzaService pizzaService, IAuthenticator authenticator)
         {
             _authenticator = authenticator;
@@ -43,7 +55,16 @@ namespace PizzaShop.WPF.VIewModel
             PizzaCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PizzaDto.Name)));
 
             LoadPizza();
-            _authenticator = authenticator;
+            CheckAdminRole();
+        }
+
+        private void CheckAdminRole()
+        {
+            if(_authenticator.CurrentUser != null)
+            {
+                var currentUser = _authenticator.CurrentUser;
+                IsAdmin = currentUser.Role.Name.Contains("Admin");
+            }
         }
 
         private bool FillterPizzas(object obj)

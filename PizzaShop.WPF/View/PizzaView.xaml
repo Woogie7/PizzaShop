@@ -11,8 +11,28 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <TextBox Margin="20" Grid.Row="0" Text="{Binding PizzaFilter, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Margin="20" Grid.Column="0" Text="{Binding PizzaFilter, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Grid Grid.Column="1">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAdmin}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+
+                <Button Content="Add Pizza"  Command="{Binding AddPizzaCommand}"/>
+            </Grid>
+        </Grid>
 
         <ItemsControl ItemsSource="{Binding Pizzas}" Margin="50" HorizontalAlignment="Center" Grid.Row="1">
             <ItemsControl.ItemTemplate>

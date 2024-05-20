@@ -1,6 +1,7 @@
 ﻿using PizzaShop.Application.DTOs.User;
 using PizzaShop.Application.Interface;
 using PizzaShop.Domain.Entities;
+using PizzaShop.Domain.Exceptions;
 
 namespace PizzaShop.Infrastructure.Authentication
 {
@@ -19,11 +20,16 @@ namespace PizzaShop.Infrastructure.Authentication
         {
             var user = await _userRepository.GetUserByEmail(userDto.Email);
 
+            if(user == null)
+            {
+                throw new UserNotFoundException(userDto.Email);
+            }
+
             var result = _hasher.IsVerify(userDto.PasswordHash, user.PasswordHash);
 
             if (!result)
             {
-                throw new Exception("Faild to login");
+                throw new InvalidPasswordException(user.Email, user.PasswordHash);
             }
 
             return user;

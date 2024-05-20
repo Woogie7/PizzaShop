@@ -53,6 +53,7 @@ namespace PizzaShop.Persistence.Repositories
             {
                 var user = await context.Users
                         .AsNoTracking()
+                        .Include(u => u.Role)
                         .FirstOrDefaultAsync(user => user.Email == email);
 
                 return user;

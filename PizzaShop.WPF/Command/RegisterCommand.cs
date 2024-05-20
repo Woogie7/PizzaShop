@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.WPF.Command
 {
-    class RegisterCommand : BaseCommand
+    class RegisterCommand : AsyncCommandBase
     {
         private readonly IAuthenticator _authenticator;
         private readonly RegisterViewModel _registerViewModel;
@@ -22,9 +22,9 @@ namespace PizzaShop.WPF.Command
 
         //public override bool CanExecute(object parameter)
         //{
-            //return _registerViewModel.CanRegister && base.CanExecute(parameter); ;
+        //return _registerViewModel.CanRegister && base.CanExecute(parameter); ;
         //}
-        public override async void Execute(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
             var succes = await _authenticator.Register(_registerViewModel.User);
 

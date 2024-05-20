@@ -40,14 +40,7 @@ namespace PizzaShop.WPF.Service
         public async Task<User> Login(UserDto userDto)
         {
 
-            try
-            {
-                CurrentUser = await _authenticationService.Login(userDto);
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            CurrentUser = await _authenticationService.Login(userDto);
 
             return CurrentUser;
         }

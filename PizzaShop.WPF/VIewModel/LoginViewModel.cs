@@ -17,11 +17,17 @@ namespace PizzaShop.WPF.VIewModel
         private readonly IAuthenticator _authenticator;
         private UserDto _user;
 
-
-
         public ICommand LoginCommand { get; }
         public ICommand RegisterNavigationCommand { get; }
         public ICommand PizzaNavigationCommand { get; }
+
+        public MessageViewModel ErrorMessageViewModel { get; }
+
+        public string ErrorMessage 
+        {
+            set => ErrorMessageViewModel.Message = value;
+        }
+        public MessageViewModel StatusMessageViewModel { get; }
 
         #region Свойства
         public UserDto User
@@ -64,12 +70,18 @@ namespace PizzaShop.WPF.VIewModel
                 }
             }
         }
+
+        
+
         #endregion
 
         public LoginViewModel(IAuthenticator authenticator, NavigationService<PizzaViewModel> navigationServicePizza, NavigationService<RegisterViewModel> navigationServiceReg)
         {
             _authenticator = authenticator;
             User = new UserDto();
+
+            ErrorMessageViewModel = new MessageViewModel();
+
             LoginCommand = new LoginCommand(_authenticator, this);
             PizzaNavigationCommand = new NavigateCommand<PizzaViewModel>(navigationServicePizza);
             RegisterNavigationCommand = new NavigateCommand<RegisterViewModel>(navigationServiceReg);
