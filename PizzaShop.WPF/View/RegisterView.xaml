@@ -8,6 +8,52 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="2 1" />
+            <Setter Property="BorderBrush" Value="LightGray" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel>
+                            <AdornedElementPlaceholder />
+                            <ItemsControl Margin="2"
+                          FontSize="12"
+                          ItemsSource="{Binding}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Foreground="Red" Text="{Binding ErrorContent}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border"
+                Padding="{TemplateBinding Padding}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="3">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Red"/>
+                            </Trigger>
+                            <Trigger Property="Validation.HasError" Value="False">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Green"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </UserControl.Resources>
     <Border Margin="25" Padding="25"
         HorizontalAlignment="Center"
@@ -26,21 +72,21 @@
 
             <StackPanel Grid.Row="1" Margin="0,20">
                 <DockPanel Margin="0,10">
-                    <TextBlock Text="Email: " Width="50" Margin="10" FontSize="14"/>
+                    <TextBlock Text="Email: " Width="50" Margin="10 10 10 25" FontSize="14"/>
                     <TextBox Grid.Column="1" Margin="20,0,0,0"
                 Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
 
                 <DockPanel Margin="0,10">
-                    <TextBlock Text="Имя: " Width="50" Margin="10" FontSize="14"/>
+                    <TextBlock Text="Имя: " Width="50" Margin="10 10 10 25" FontSize="14"/>
                     <TextBox Grid.Column="1" Margin="20,0,0,0"
                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
 
                 <DockPanel Margin="0,10">
-                    <TextBlock Text="Пароль: " Width="50" Margin="10" FontSize="14"/>
-                    <PasswordBox Name="RegisterPasswordBox" Width="250" Margin="20,0,0,0" FontSize="24"
-                        MaxLength="50" PasswordChanged="PasswordBox_PasswordChanged"/>
+                    <TextBlock Text="Пароль: " Width="50" Margin="10 10 10 25" FontSize="14"/>
+                    <TextBox Name="RegisterPasswordBox" Width="250" Margin="20,0,0,0" FontSize="14"
+                        MaxLength="50" Text="{Binding PasswordHash, UpdateSourceTrigger=PropertyChanged}"/>
                 </DockPanel>
 
                 <TextBlock Margin="5" DataContext="{Binding ErrorMessageViewModel}"
