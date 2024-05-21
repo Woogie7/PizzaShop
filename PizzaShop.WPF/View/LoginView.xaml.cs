@@ -25,18 +25,5 @@ namespace PizzaShop.WPF.View
         {
             InitializeComponent();
         }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is LoginViewModel viewModel)
-            {
-                var passwordBox = sender as PasswordBox;
-                if (passwordBox != null)
-                {
-                    viewModel.PasswordHash = passwordBox.Password;
-                }
-            }
-        }
-
     }
 }
