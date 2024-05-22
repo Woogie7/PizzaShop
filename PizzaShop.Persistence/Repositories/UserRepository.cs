@@ -30,7 +30,7 @@ namespace PizzaShop.Persistence.Repositories
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
-                var role = await context.Roles.FirstOrDefaultAsync(r => r.Id == (int)RoleEnum.Admin);
+                var role = await context.Roles.FirstOrDefaultAsync(r => r.Id == (int)RoleEnum.User);
 
                 var newUser = new User
                 {

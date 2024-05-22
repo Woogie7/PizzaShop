@@ -13,35 +13,38 @@ namespace PizzaShop.WPF.VIewModel
         public ObservaleObject CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
-        private string _nameUser = string.Empty;
 
         public string NameUser
         {
-            get { return _nameUser; }
-            set { 
-                _nameUser = value;
-                OnPropertyChanged();
+            get { return _authenticator.CurrentUser?.UserName; }
+            set {
+                _authenticator.CurrentUser.UserName = value;
+                OnPropertyChanged(nameof(NameUser));
             }
         }
 
-        public ICommand PizzaNavigateCommand { get; }
+        public ICommand LoginNavigateCommand { get; }
+        public ICommand LogoutCommand { get; }
+
+        public bool IsLoggedIn
+        {
+            get { return _authenticator.IsLoggedIn;}
+        }
 
 
         public MainWindowViewModel(NavigationStore navigationStore,
-            NavigationService<PizzaViewModel> pizzaNavigationService
+            NavigationService<LoginViewModel> loginNavigationService
 ,
             IAuthenticator authenticator)
         {
             _navigationStore = navigationStore;
             _authenticator = authenticator;
 
-            PizzaNavigateCommand = new NavigateCommand<PizzaViewModel>(pizzaNavigationService);
+            LoginNavigateCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
+            LogoutCommand = new LogoutCommand(_authenticator, this);
 
             
-            if(_authenticator.CurrentUser != null)
-            {
-                _nameUser = _authenticator.CurrentUser.UserName;
-            }
+            
 
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
@@ -49,6 +52,8 @@ namespace PizzaShop.WPF.VIewModel
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));
+            OnPropertyChanged(nameof(NameUser));
+            OnPropertyChanged(nameof(IsLoggedIn));
         }
     }
 }

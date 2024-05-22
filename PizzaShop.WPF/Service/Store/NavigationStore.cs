@@ -23,6 +23,7 @@ namespace PizzaShop.WPF.Service.Store
 
         private void OnCurrentViewModelChanged()
         {
+            OnPropertyChanged(nameof(CurrentViewModel));
             CurrentViewModelChanged?.Invoke();
         }
 

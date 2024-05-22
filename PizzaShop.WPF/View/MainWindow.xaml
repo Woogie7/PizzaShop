@@ -21,10 +21,34 @@
     </Window.Resources>
     
     <Grid>
-        <TextBlock Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#e38846">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <TextBlock Margin="10"  VerticalAlignment="Center" Foreground="#2B0217"> 
             <Run Text="Привет"/>
             <Run Text="{Binding NameUser}"/>
-        </TextBlock>
-        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>
+            </TextBlock>
+
+            <Button Content="Выйти" Command="{Binding LogoutCommand}" 
+                    HorizontalAlignment="Right" Width="75" Height="30" Margin="10"/>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </ScrollViewer>
+
     </Grid>
 </Window>

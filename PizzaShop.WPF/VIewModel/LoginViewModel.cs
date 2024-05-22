@@ -129,7 +129,7 @@ namespace PizzaShop.WPF.VIewModel
             {
                 _errorValidationViewModel.AddError(nameof(Email), "Email обязательное поле!");
             }
-            else if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            else if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$") && Email != "Admin")
             {
                 _errorValidationViewModel.AddError(nameof(Email), "Не корректный email.");
             }
