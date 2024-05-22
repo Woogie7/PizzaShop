@@ -1,7 +1,9 @@
 ﻿using PizzaShop.Application.DTOs;
 using PizzaShop.Application.Interface;
+using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Core;
 using PizzaShop.WPF.Service;
+using PizzaShop.WPF.Service.Store;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace PizzaShop.WPF.VIewModel
 {
@@ -43,13 +46,17 @@ namespace PizzaShop.WPF.VIewModel
                 OnPropertyChanged(nameof(IsAdmin));
             }
         }
+        public ICommand AddPizzaCommand { get;}
 
-        public PizzaViewModel(IPizzaService pizzaService, IAuthenticator authenticator)
+
+        public PizzaViewModel(IPizzaService pizzaService, IAuthenticator authenticator, NavigationService<ManagePizzaViewModel> navigateCommand)
         {
             _authenticator = authenticator;
             _pizzaService = pizzaService;
             Pizzas = new ObservableCollection<PizzaDto>();
             PizzaCollectionView = CollectionViewSource.GetDefaultView(Pizzas);
+
+            AddPizzaCommand = new NavigateCommand<ManagePizzaViewModel>(navigateCommand);
 
             PizzaCollectionView.Filter = FillterPizzas;
             PizzaCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PizzaDto.Name)));

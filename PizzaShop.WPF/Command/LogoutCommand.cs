@@ -22,7 +22,7 @@ namespace PizzaShop.WPF.Command
 
         public override bool CanExecute(object parameter)
         {
-            return _mainViewModel.IsLoggedIn && base.CanExecute(parameter);
+            return _authenticator.IsLoggedIn && base.CanExecute(parameter);
         }
 
         public override void Execute(object parameter)
