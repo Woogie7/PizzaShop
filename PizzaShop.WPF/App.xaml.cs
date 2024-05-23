@@ -40,7 +40,10 @@ namespace PizzaShop.WPF
                     service.AddSingleton<IAuthenticationService, AuthenticationService>();
                     service.AddScoped<IAuthenticator, Authenticator>();
                     service.AddScoped<IPizzaService, PizzaService>();
+                    service.AddScoped<ISizeService, SizeService>();
+
                     service.AddScoped<IPizzaRepository, PizzaRepository>();
+                    service.AddScoped<ISizeRepository, SizeRepository>();
                     service.AddScoped<IUserRepository, UserRepository>();
                 })
                 .Build();
@@ -50,7 +53,7 @@ namespace PizzaShop.WPF
         {
             _host.Start();            
 
-            NavigationService<LoginViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<LoginViewModel>>();
+            NavigationService<ManagePizzaViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<ManagePizzaViewModel>>();
             navigationService.Navigate();
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();

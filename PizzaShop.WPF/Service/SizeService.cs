@@ -1,4 +1,5 @@
 ﻿using PizzaShop.Application.DTOs;
+using PizzaShop.Application.DTOs.Size;
 using PizzaShop.Application.Interface;
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.WPF.Service
 {
-    internal class PizzaService : IPizzaService
+    class SizeService : ISizeService
     {
-        private readonly IPizzaRepository _repository;
+        private readonly ISizeRepository _repository;
 
-        public PizzaService(IPizzaRepository repository)
+        public SizeService(ISizeRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<IEnumerable<PizzaDto>> GetPizzaAllAsync()
+        public async Task<IEnumerable<SizeDto>> GetSizeAllAsync()
         {
             return await _repository.GetAllAsync();
         }

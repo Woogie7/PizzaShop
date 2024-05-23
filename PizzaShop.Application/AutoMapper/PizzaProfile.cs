@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PizzaShop.Application.DTOs;
+using PizzaShop.Application.DTOs.Size;
 using PizzaShop.Domain.Entities;
 
 namespace PizzaShop.Application.AutoMapper;
@@ -17,12 +18,8 @@ internal class PizzaProfile : Profile
             .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.Ingredients.Select(i => i.Name).ToArray()))
             .ForMember(crtI => crtI.Description, i => i.MapFrom(x => x.Description));
 
-        //CreateMap<PizzaDto, Pizza>()
-        //    .ForMember(crtI => crtI.id, i => i.MapFrom(x => x.Id))
-        //    .ForMember(crtI => crtI.Amount, i => i.MapFrom(x => x.Amount))
-        //    .ForMember(crtI => crtI.Currency, i => i.MapFrom(x => x.Currency.Id))
-        //    .ForMember(crtI => crtI.CategoryIncome, i => i.MapFrom(x => x.Category.Id))
-        //    .ForMember(crtI => crtI.Date, i => i.MapFrom(x => x.Date));
+        CreateMap<Size, SizeDto>()
+            .ForMember(crtI => crtI.SizeName, i => i.MapFrom(x => x.Name));
 
 
     }
