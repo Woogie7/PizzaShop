@@ -58,7 +58,7 @@ namespace PizzaShop.WPF
         {
             _host.Start();            
 
-            NavigationService<ManagePizzaViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<ManagePizzaViewModel>>();
+            NavigationService<LoginViewModel> navigationService = _host.Services.GetRequiredService<NavigationService<LoginViewModel>>();
             navigationService.Navigate();
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();

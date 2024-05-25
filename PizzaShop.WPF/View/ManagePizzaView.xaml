@@ -70,9 +70,17 @@
                 <StackPanel Width="200">
                     <TextBlock Text="Выберите ингредиенты" Foreground="Gray" Visibility="Visible"/>
 
-                    <ComboBox Margin="5" ItemsSource="{Binding Ingredients}" DisplayMemberPath="IngredientName" SelectedItem="{Binding SelectedIngredient}"/>
-                    
-                    <Button Content="Добавить ингредиент" Command="{Binding AddIngredientCommand}" Margin="5"/>
+
+                    <DockPanel HorizontalAlignment="Center">
+                        <ComboBox Margin="5" ItemsSource="{Binding Ingredients}" DisplayMemberPath="IngredientName" SelectedItem="{Binding SelectedIngredient}" Width="100"/>
+                        
+                        <Button Command="{Binding AddIngredientCommand}" Margin="5">
+                            <Image Source="../Images/add.png" Width="30" Height="30"/>
+                        </Button>
+                        <Button Command="{Binding DeleteIngredientCommand}" Margin="5">
+                            <Image Source="../Images/delete.png" Width="30" Height="30"/>
+                        </Button>
+                    </DockPanel>
 
                     <ListBox Margin="5" ItemsSource="{Binding PizzaIngredients }" DisplayMemberPath="IngredientName"/>
                 </StackPanel>

@@ -50,8 +50,11 @@ namespace PizzaShop.WPF.VIewModel
             get { return selectedIngredient; }
             set
             {
-                selectedIngredient = value;
-                OnPropertyChanged(nameof(SelectedIngredient));
+                if (selectedIngredient != value)
+                {
+                    selectedIngredient = value;
+                    OnPropertyChanged(nameof(SelectedIngredient));
+                }
             }
         }
 
@@ -112,6 +115,7 @@ namespace PizzaShop.WPF.VIewModel
 
 
         public ICommand AddIngredientCommand { get; set; }
+        public ICommand DeleteIngredientCommand { get; set; }
 
         public ManagePizzaViewModel(IPizzaService pizzaService, ISizeService sizeService, ICategorySevice categoryService, IIngredientService ingredientSevice)
         {
@@ -127,6 +131,7 @@ namespace PizzaShop.WPF.VIewModel
             PizzaIngredients = new ObservableCollection<IngredientDto>();
 
             AddIngredientCommand = new AddIngredientCommand(this);
+            DeleteIngredientCommand = new DeleteIngredientCommand(this);
 
             LoadPizza();
             LoadSize();
