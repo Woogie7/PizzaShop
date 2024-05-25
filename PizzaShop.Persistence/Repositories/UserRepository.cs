@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using PizzaShop.Application.DTOs.User;
-using PizzaShop.Application.Interface;
+using PizzaShop.Application.Interface.Repository;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Domain.Enum;
 using PizzaShop.Persistence.Context;

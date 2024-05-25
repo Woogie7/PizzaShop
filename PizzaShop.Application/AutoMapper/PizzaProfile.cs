@@ -21,6 +21,12 @@ internal class PizzaProfile : Profile
         CreateMap<Size, SizeDto>()
             .ForMember(crtI => crtI.SizeName, i => i.MapFrom(x => x.Name));
 
+        CreateMap<Category, CategoryDto>()
+            .ForMember(crtI => crtI.CategoryName, i => i.MapFrom(x => x.Name));
+
+        CreateMap<Ingredient, IngredientDto>()
+            .ForMember(cerI => cerI.IngredientName, i => i.MapFrom(x => x.Name));
+
 
     }
 }

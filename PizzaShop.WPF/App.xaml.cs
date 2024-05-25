@@ -13,6 +13,7 @@ using System;
 using System.Windows;
 using PizzaShop.Infrastructure.Authentication;
 using PizzaShop.WPF.HostBuilders;
+using PizzaShop.Application.Interface.Repository;
 
 namespace PizzaShop.WPF
 {
@@ -41,9 +42,13 @@ namespace PizzaShop.WPF
                     service.AddScoped<IAuthenticator, Authenticator>();
                     service.AddScoped<IPizzaService, PizzaService>();
                     service.AddScoped<ISizeService, SizeService>();
+                    service.AddScoped<ICategorySevice, CategoryService>();
+                    service.AddScoped<IIngredientService, IngredientService>();
 
                     service.AddScoped<IPizzaRepository, PizzaRepository>();
                     service.AddScoped<ISizeRepository, SizeRepository>();
+                    service.AddScoped<ICategoryRepository, CategoryRepository>();
+                    service.AddScoped<IIngredientRepository, IngredientRepository>();
                     service.AddScoped<IUserRepository, UserRepository>();
                 })
                 .Build();

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PizzaShop.Application.DTOs;
-using PizzaShop.Application.DTOs.Size;
 using PizzaShop.Application.Interface.Repository;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Persistence.Context;
@@ -13,17 +12,16 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.Persistence.Repositories
 {
-    public class SizeRepository : ISizeRepository
+    public class IngredientRepository : IIngredientRepository
     {
         private readonly IMapper _mapper;
 
         private readonly PizzaShopDbContextFactory _contextFactory;
-        public SizeRepository(IMapper mapper, PizzaShopDbContextFactory contextFactory)
+        public IngredientRepository(IMapper mapper, PizzaShopDbContextFactory contextFactory)
         {
             _mapper = mapper;
             _contextFactory = contextFactory;
         }
-
         public Task<Size> AddAsync(Size entity)
         {
             throw new NotImplementedException();
@@ -39,24 +37,21 @@ namespace PizzaShop.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<SizeDto>> GetAllAsync()
+        public async Task<IEnumerable<IngredientDto>> GetAllAsync()
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
-
-                IEnumerable<Size> entities = await context.Size
+                IEnumerable<Ingredient> entities = await context.Ingredients
                     .AsNoTracking()
                     .ToListAsync();
 
+                var ingredients = entities.Select(ingredient => _mapper.Map<IngredientDto>(ingredient));
 
-
-                var sizes = entities.Select(size => _mapper.Map<SizeDto>(size));
-
-                return sizes;
+                return ingredients;
             }
         }
 
-        public Task<Size> GetByIdAsync(int id)
+        public Task<Ingredient> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }

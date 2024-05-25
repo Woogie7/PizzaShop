@@ -67,27 +67,29 @@
                 <TextBlock Text="Имя" Foreground="Gray" Visibility="Visible"/>
                 <TextBox Width="200" Margin="5" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <!--<TextBlock Text="Ингредиенты" Foreground="Gray" Visibility="Visible"/>
-                <ListBox Margin="5" ItemsSource="{Binding Ingredients}" 
-                 SelectionMode="Extended">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                
-                <TextBox Width="200" Margin="5" Text="{Binding NewIngredient, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Добавить ингредиент" Margin="5" Command="{Binding AddIngredientCommand}"/>-->
+                <StackPanel Width="200">
+                    <TextBlock Text="Выберите ингредиенты" Foreground="Gray" Visibility="Visible"/>
+
+                    <ComboBox Margin="5" ItemsSource="{Binding Ingredients}" DisplayMemberPath="IngredientName" SelectedItem="{Binding SelectedIngredient}"/>
+                    
+                    <Button Content="Добавить ингредиент" Command="{Binding AddIngredientCommand}" Margin="5"/>
+
+                    <ListBox Margin="5" ItemsSource="{Binding PizzaIngredients }" DisplayMemberPath="IngredientName"/>
+                </StackPanel>
 
                 <TextBlock Text="Размер" Foreground="Gray" Visibility="Visible"/>
                 <ComboBox Margin="5" ItemsSource="{Binding Sizes}" DisplayMemberPath="SizeName" SelectedItem="{Binding SelectedSize, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="Категория" Foreground="Gray" Visibility="Visible"/>
-                <ComboBox Margin="5" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox Margin="5" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding CategoryName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <TextBlock Text="Цена" Foreground="Gray" Visibility="Visible"/>
-                <TextBox Width="200" Margin="5" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0} руб'}"/>
+                <TextBox Width="200" Margin="5" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Описание" Foreground="Gray" Visibility="Visible"/>
                 <TextBox Width="200" Margin="5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
@@ -96,6 +98,7 @@
                 <!--<Button Content="Сохранить" Margin="10" Command="{Binding SavePizzaCommand}"/>
                 <Button Content="Удалить" Margin="10" Command="{Binding DeletePizzaCommand}" CommandParameter="{Binding SelectedPizza}"/>
                 <Button Content="Удалить все пиццы" Margin="10" Command="{Binding DeleteAllPizzasCommand}"/>-->
+            
             </StackPanel>
         </Grid>
 

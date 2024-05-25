@@ -1,10 +1,14 @@
 ﻿using PizzaShop.Application.DTOs;
 using PizzaShop.Application.DTOs.Size;
 using PizzaShop.Application.Interface;
+using PizzaShop.Domain.Entities;
+using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Core;
+using PizzaShop.WPF.Service;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PizzaShop.WPF.VIewModel
 {
@@ -12,17 +16,22 @@ namespace PizzaShop.WPF.VIewModel
     {
         private readonly IPizzaService _pizzaService;
         private readonly ISizeService _sizeService;
+        private readonly ICategorySevice _categoryService;
+        private readonly IIngredientService _ingredientSevice;
 
         public ObservableCollection<PizzaDto> Pizzas { get; set; }
         public ObservableCollection<SizeDto> Sizes { get; set; }
+        public ObservableCollection<CategoryDto> Categories { get; set; }
+        public ObservableCollection<IngredientDto> Ingredients { get; set; }
+        public ObservableCollection<IngredientDto> PizzaIngredients { get; set; }
 
 
         #region Свойства
 
         private string name;
-        private List<string> ingredients = new List<string>();
+        private IngredientDto selectedIngredient;
         private SizeDto selectedSize;
-        private string category;
+        private CategoryDto selectedCategory;
         private decimal price;
         private string description;
 
@@ -36,13 +45,13 @@ namespace PizzaShop.WPF.VIewModel
             }
         }
 
-        public List<string> Ingredients
+        public IngredientDto SelectedIngredient
         {
-            get { return ingredients; }
+            get { return selectedIngredient; }
             set
             {
-                ingredients = value;
-                OnPropertyChanged(nameof(Ingredients));
+                selectedIngredient = value;
+                OnPropertyChanged(nameof(SelectedIngredient));
             }
         }
 
@@ -56,13 +65,13 @@ namespace PizzaShop.WPF.VIewModel
             }
         }
 
-        public string Category
+        public CategoryDto SelectedCategory
         {
-            get { return category; }
+            get { return selectedCategory; }
             set
             {
-                category = value;
-                OnPropertyChanged(nameof(Category));
+                selectedCategory = value;
+                OnPropertyChanged(nameof(CategoryDto));
             }
         }
 
@@ -102,16 +111,27 @@ namespace PizzaShop.WPF.VIewModel
         #endregion
 
 
-        public ManagePizzaViewModel(IPizzaService pizzaService, ISizeService sizeService)
+        public ICommand AddIngredientCommand { get; set; }
+
+        public ManagePizzaViewModel(IPizzaService pizzaService, ISizeService sizeService, ICategorySevice categoryService, IIngredientService ingredientSevice)
         {
             _pizzaService = pizzaService;
             _sizeService = sizeService;
+            _categoryService = categoryService;
+            _ingredientSevice = ingredientSevice;
 
             Pizzas = new ObservableCollection<PizzaDto>();
             Sizes = new ObservableCollection<SizeDto>();
+            Categories = new ObservableCollection<CategoryDto>();
+            Ingredients = new ObservableCollection<IngredientDto>();
+            PizzaIngredients = new ObservableCollection<IngredientDto>();
+
+            AddIngredientCommand = new AddIngredientCommand(this);
 
             LoadPizza();
             LoadSize();
+            LoadCategory();
+            LoadIngredient();
         }
 
         public async Task LoadPizza()
@@ -135,5 +155,28 @@ namespace PizzaShop.WPF.VIewModel
                 Sizes.Add(size);
             }
         }
+
+        public async Task LoadCategory()
+        {
+            Categories.Clear();
+            var allCategories = await _categoryService.GetCategoryAllAsync();
+
+            foreach (var category in allCategories)
+            {
+                Categories.Add(category);
+            }
+        }
+
+        public async Task LoadIngredient()
+        {
+            Ingredients.Clear();
+            var allLoadIngredient = await _ingredientSevice.GetIngredientAllAsync();
+
+            foreach (var ingredient in allLoadIngredient)
+            {
+                Ingredients.Add(ingredient);
+            }
+        }
+
     }
 }

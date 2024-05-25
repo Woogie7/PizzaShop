@@ -1,6 +1,7 @@
 ﻿using PizzaShop.Application.DTOs;
 using PizzaShop.Application.DTOs.Size;
 using PizzaShop.Application.Interface;
+using PizzaShop.Application.Interface.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

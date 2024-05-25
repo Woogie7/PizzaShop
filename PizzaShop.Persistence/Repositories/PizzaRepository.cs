@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PizzaShop.Application.DTOs;
-using PizzaShop.Application.Interface;
+using PizzaShop.Application.Interface.Repository;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Persistence.Context;
 using System;

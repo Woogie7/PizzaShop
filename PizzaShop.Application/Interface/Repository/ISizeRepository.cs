@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.Application.Interface
+namespace PizzaShop.Application.Interface.Repository
 {
     public interface ISizeRepository
     {

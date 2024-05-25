@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.Application.DTOs.Size
+namespace PizzaShop.Application.DTOs
 {
-    public class SizeDto
+    public class IngredientDto
     {
-        public string SizeName { get; set; }
+        public string IngredientName {  get; set; }
     }
 }
