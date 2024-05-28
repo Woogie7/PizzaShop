@@ -1,4 +1,5 @@
 ﻿using PizzaShop.Application.DTOs;
+using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.DTOs.Size;
 using PizzaShop.Application.Interface;
 using PizzaShop.Domain.Entities;
@@ -117,6 +118,9 @@ namespace PizzaShop.WPF.VIewModel
         public ICommand AddIngredientCommand { get; set; }
         public ICommand DeleteIngredientCommand { get; set; }
 
+        public ICommand AddNewPizzaCommand { get; set; }
+        public ICommand DeletePizzaCommand { get; set; }
+
         public ManagePizzaViewModel(IPizzaService pizzaService, ISizeService sizeService, ICategorySevice categoryService, IIngredientService ingredientSevice)
         {
             _pizzaService = pizzaService;
@@ -132,6 +136,8 @@ namespace PizzaShop.WPF.VIewModel
 
             AddIngredientCommand = new AddIngredientCommand(this);
             DeleteIngredientCommand = new DeleteIngredientCommand(this);
+            AddNewPizzaCommand = new AddNewPizzaCommand(this, _pizzaService);
+            DeletePizzaCommand = new DeletePizzaCommand(this, _pizzaService);
 
             LoadPizza();
             LoadSize();

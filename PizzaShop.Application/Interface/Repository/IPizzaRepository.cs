@@ -1,4 +1,4 @@
-﻿using PizzaShop.Application.DTOs;
+﻿using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,9 @@ namespace PizzaShop.Application.Interface.Repository
     {
         Task<Pizza> GetByIdAsync(int id);
         Task<IEnumerable<PizzaDto>> GetAllAsync();
-        Task<Pizza> AddAsync(Pizza entity);
+        Task<CreatePizzaDto> AddAsync(CreatePizzaDto newPizza);
         Task UpdateAsync(Pizza entity);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(PizzaDto pizzaDto);
         Task DeleteAllAsync();
     }
 }

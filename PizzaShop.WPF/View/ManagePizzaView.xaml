@@ -102,9 +102,10 @@
                 <TextBlock Text="Описание" Foreground="Gray" Visibility="Visible"/>
                 <TextBox Width="200" Margin="5" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
 
+                <Button Content="Сохранить" Margin="10" Command="{Binding AddNewPizzaCommand}"/>
+                <Button Content="Удалить" Margin="10" Command="{Binding DeletePizzaCommand}" CommandParameter="{Binding SelectedPizza}"/>
 
                 <!--<Button Content="Сохранить" Margin="10" Command="{Binding SavePizzaCommand}"/>
-                <Button Content="Удалить" Margin="10" Command="{Binding DeletePizzaCommand}" CommandParameter="{Binding SelectedPizza}"/>
                 <Button Content="Удалить все пиццы" Margin="10" Command="{Binding DeleteAllPizzasCommand}"/>-->
             
             </StackPanel>

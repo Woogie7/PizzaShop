@@ -1,4 +1,4 @@
-﻿using PizzaShop.Application.DTOs;
+﻿using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.Interface;
 using PizzaShop.Application.Interface.Repository;
 using System;
@@ -16,6 +16,16 @@ namespace PizzaShop.WPF.Service
         public PizzaService(IPizzaRepository repository)
         {
             _repository = repository;
+        }
+
+        public async Task<CreatePizzaDto> AddPizzaAsync(CreatePizzaDto newPizza)
+        {
+            return await _repository.AddAsync(newPizza);
+        }
+
+        public async Task DeletePizzaAsync(PizzaDto pizzaDto)
+        {
+            await _repository.DeleteAsync(pizzaDto);
         }
 
         public async Task<IEnumerable<PizzaDto>> GetPizzaAllAsync()

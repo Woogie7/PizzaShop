@@ -26,9 +26,11 @@ namespace PizzaShop.WPF.Command
 
         public override bool CanExecute(object parameter)
         {
-            return _managePizzaViewModel.SelectedIngredient != null &&
-                   !_managePizzaViewModel.PizzaIngredients.Contains(_managePizzaViewModel.SelectedIngredient) &&
+            var ass = _managePizzaViewModel.SelectedIngredient != null &&
+                   _managePizzaViewModel.PizzaIngredients.Contains(_managePizzaViewModel.SelectedIngredient) &&
                    base.CanExecute(parameter);
+
+            return ass;
         }
 
         public override void Execute(object parameter)

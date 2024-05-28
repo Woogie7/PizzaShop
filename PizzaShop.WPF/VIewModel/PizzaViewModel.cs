@@ -1,4 +1,4 @@
-﻿using PizzaShop.Application.DTOs;
+﻿using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.Interface;
 using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Core;

@@ -12,10 +12,19 @@ namespace PizzaShop.WPF.Command
 {
     private readonly ManagePizzaViewModel _managePizzaViewModel;
 
-    public AddIngredientCommand(ManagePizzaViewModel managePizzaViewModel)
-    {
-        _managePizzaViewModel = managePizzaViewModel;
-    }
+        public AddIngredientCommand(ManagePizzaViewModel managePizzaViewModel)
+        {
+            _managePizzaViewModel = managePizzaViewModel;
+            _managePizzaViewModel.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(_managePizzaViewModel.SelectedIngredient))
+                {
+                    OnCanExecuteChanged();
+                }
+            };
+        
+
+        }
 
     public override bool CanExecute(object parameter)
     {

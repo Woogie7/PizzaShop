@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using PizzaShop.Application.DTOs;
+using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.Interface.Repository;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Persistence.Context;
@@ -24,31 +24,29 @@ namespace PizzaShop.Persistence.Repositories
             _contextFactory = contextFactory;
             _mapper = mapper;
         }
-        public async Task<Pizza> AddAsync(Pizza entity)
+        public async Task<CreatePizzaDto> AddAsync(CreatePizzaDto newPizzaDto)
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
-                var category = await context.Categories.FirstOrDefaultAsync(c => c.Id == 1);
-                var size = await context.Size.FirstOrDefaultAsync(c => c.Id == 1);
-                var ingredients = await context.Ingredients.Take(3).ToListAsync();
 
-                var pizza = new Pizza
-                {
-                    Id = 1,
-                    Category = category,
-                    CategoryId = 1,
-                    Description = "Описание",
-                    Ingredients = ingredients,
-                    Name = "Гавайская",
-                    Price = 120,
-                    Size = size,
-                    SizeId = 1
-                };
+                var pizza = _mapper.Map<Pizza>(newPizzaDto);
+
+
+                var category = await context.Categories.FirstOrDefaultAsync(c => c.Id == newPizzaDto.CategoryId);
+                var size = await context.Size.FirstOrDefaultAsync(c => c.Id == newPizzaDto.SizeId);
+                var ingredients = await context.Ingredients
+                                    .Where(i => newPizzaDto.IngredientsId.Contains(i.Id))
+                                    .ToListAsync();
+
+                pizza.Category = category;
+                pizza.Size = size;
+                pizza.Ingredients = ingredients;
+                pizza.ImagePath = "dsa";
 
                 await context.AddAsync(pizza);
                 await context.SaveChangesAsync();
 
-                return pizza;
+                return newPizzaDto;
             }
         }
 
@@ -57,9 +55,15 @@ namespace PizzaShop.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(PizzaDto pizzaDto)
         {
-            throw new NotImplementedException();
+            using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+                var deletedPizza = await context.Pizzas.FirstOrDefaultAsync(p => p.Name == pizzaDto.Name);
+
+                context.Pizzas.Remove(deletedPizza);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<PizzaDto>> GetAllAsync()

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.Application.DTOs
+namespace PizzaShop.Application.DTOs.Pizza
 {
     public class PizzaDto
     {
