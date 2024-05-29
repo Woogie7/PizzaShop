@@ -21,8 +21,13 @@
         <DataTemplate DataType="{x:Type vms:ManagePizzaViewModel}">
             <view:ManagePizzaView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:CartViewModel}">
+            <view:CartView/>
+        </DataTemplate>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -40,18 +45,29 @@
                 </Style>
             </Grid.Style>
 
-            <TextBlock Margin="10"  VerticalAlignment="Center" Foreground="#2B0217"> 
-            <Run Text="Привет"/>
-            <Run Text="{Binding NameUser}"/>
+            <TextBlock Margin="10" VerticalAlignment="Center" Foreground="#2B0217"> 
+                <Run Text="Привет"/>
+                <Run Text="{Binding NameUser}"/>
             </TextBlock>
 
-            <Button Content="Выйти" Command="{Binding LogoutCommand}" 
-                    HorizontalAlignment="Right" Width="75" Height="30" Margin="10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Корзина" Command="{Binding ToggleCartCommand}"
+        HorizontalAlignment="Right" Width="75" Height="30" Margin="10"/>
+
+                <Button Content="Выйти" Command="{Binding LogoutCommand}" IsEnabled="{Binding IsLoggedIn}"
+HorizontalAlignment="Right" Width="75" Height="30" Margin="10"/>
+            </StackPanel>
+            
         </Grid>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <ContentControl Content="{Binding CurrentViewModel}"/>
         </ScrollViewer>
 
+        <Border Grid.Row="1" x:Name="CartPanel" Background="White" BorderBrush="#e38846" BorderThickness="1" 
+                HorizontalAlignment="Right" Width="300" VerticalAlignment="Stretch"
+                Visibility="{Binding IsCartVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ContentControl Content="{Binding CartViewModel}"/>
+        </Border>
     </Grid>
 </Window>

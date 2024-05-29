@@ -10,6 +10,17 @@ namespace PizzaShop.WPF.VIewModel
     {
         private readonly NavigationStore _navigationStore;
         private readonly IAuthenticator _authenticator;
+        private readonly ManagePizzaViewModel _managePizzaViewModel;
+        private bool _isCartVisible;
+        public bool IsCartVisible
+        {
+            get { return _isCartVisible; }
+            set
+            {
+                _isCartVisible = value;
+                OnPropertyChanged(nameof(IsCartVisible));
+            }
+        }
         public ObservaleObject CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
@@ -25,28 +36,33 @@ namespace PizzaShop.WPF.VIewModel
 
         public ICommand LoginNavigateCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand ToggleCartCommand { get; }
 
         public bool IsLoggedIn
         {
             get { return _authenticator.IsLoggedIn;}
         }
 
+        public CartViewModel CartViewModel { get; }
+
 
         public MainWindowViewModel(NavigationStore navigationStore,
             NavigationService<LoginViewModel> loginNavigationService
 ,
-            IAuthenticator authenticator)
+            IAuthenticator authenticator,
+            ManagePizzaViewModel managePizzaViewModel)
         {
             _navigationStore = navigationStore;
             _authenticator = authenticator;
 
             LoginNavigateCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
-            LogoutCommand = new LogoutCommand(_authenticator, this);
+            ToggleCartCommand = new ToggleCartCommand(this);
 
-            
-            
+
+            CartViewModel = new CartViewModel();
 
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            _managePizzaViewModel = managePizzaViewModel;
         }
 
         private void OnCurrentViewModelChanged()

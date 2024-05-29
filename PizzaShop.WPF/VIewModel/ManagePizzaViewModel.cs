@@ -8,6 +8,7 @@ using PizzaShop.WPF.Core;
 using PizzaShop.WPF.Service;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -38,7 +39,12 @@ namespace PizzaShop.WPF.VIewModel
 
         public string Name
         {
-            get { return name; }
+            get {
+                if (SelectedPizza != null)
+                {
+                    return SelectedPizza.Name;
+                }
+                return name; }
             set
             {
                 name = value;
@@ -61,7 +67,13 @@ namespace PizzaShop.WPF.VIewModel
 
         public SizeDto SelectedSize
         {
-            get { return selectedSize; }
+            get {
+                if (SelectedPizza != null)
+                {
+                    return Sizes.FirstOrDefault(c => c.SizeName == SelectedPizza.Size);
+
+                }
+                return selectedSize; }
             set
             {
                 selectedSize = value;
@@ -71,7 +83,13 @@ namespace PizzaShop.WPF.VIewModel
 
         public CategoryDto SelectedCategory
         {
-            get { return selectedCategory; }
+            get {
+                if (SelectedPizza != null)
+                {
+                    return Categories.FirstOrDefault(c => c.CategoryName == SelectedPizza.Category);
+
+                }
+                return selectedCategory; }
             set
             {
                 selectedCategory = value;
@@ -81,7 +99,13 @@ namespace PizzaShop.WPF.VIewModel
 
         public decimal Price
         {
-            get { return price; }
+            get {
+                if (SelectedPizza != null)
+                {
+                    return SelectedPizza.Price;
+
+                }
+                return price; }
             set
             {
                 price = value;
@@ -91,9 +115,16 @@ namespace PizzaShop.WPF.VIewModel
 
         public string Description
         {
-            get { return description; }
+            get {
+                if (SelectedPizza != null)
+                {
+                    return SelectedPizza.Description;
+                    
+                }
+                return description; }
             set
             {
+                
                 description = value;
                 OnPropertyChanged(nameof(Description));
             }
@@ -108,7 +139,13 @@ namespace PizzaShop.WPF.VIewModel
             set
             {
                 selectedPizza = value;
+                OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(SelectedPizza));
+                OnPropertyChanged(nameof(SelectedSize));
+                OnPropertyChanged(nameof(SelectedCategory));
+                OnPropertyChanged(nameof(Price));
+                OnPropertyChanged(nameof(Description));
+                UpdatePizzaIngredients();
             }
         }
 
@@ -186,6 +223,24 @@ namespace PizzaShop.WPF.VIewModel
             foreach (var ingredient in allLoadIngredient)
             {
                 Ingredients.Add(ingredient);
+            }
+        }
+
+        private void UpdatePizzaIngredients()
+        {
+            if (SelectedPizza != null && SelectedPizza.Ingredients != null)
+            {
+                PizzaIngredients.Clear();
+                
+                var filteredIngredients = Ingredients
+                    .Where(i => SelectedPizza.Ingredients.Contains(i.IngredientName))
+                    .ToList();
+
+                foreach(var f in filteredIngredients)
+                {
+                    PizzaIngredients.Add(f);
+                }
+               
             }
         }
 

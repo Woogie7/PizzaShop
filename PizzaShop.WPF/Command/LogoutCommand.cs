@@ -3,9 +3,11 @@ using PizzaShop.WPF.Service;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PizzaShop.WPF.Command
 {
@@ -18,11 +20,6 @@ namespace PizzaShop.WPF.Command
         {
             _authenticator = authenticator;
             _mainViewModel = mainViewModel;
-        }
-
-        public override bool CanExecute(object parameter)
-        {
-            return _authenticator.IsLoggedIn && base.CanExecute(parameter);
         }
 
         public override void Execute(object parameter)
