@@ -1,4 +1,5 @@
-﻿using PizzaShop.WPF.Command;
+﻿using PizzaShop.Application.Interface;
+using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Core;
 using PizzaShop.WPF.Service;
 using PizzaShop.WPF.Service.Store;
@@ -11,6 +12,8 @@ namespace PizzaShop.WPF.VIewModel
         private readonly NavigationStore _navigationStore;
         private readonly IAuthenticator _authenticator;
         private readonly ManagePizzaViewModel _managePizzaViewModel;
+        private readonly IOrderService orderService;
+
         private bool _isCartVisible;
         public bool IsCartVisible
         {
@@ -50,7 +53,8 @@ namespace PizzaShop.WPF.VIewModel
             NavigationService<LoginViewModel> loginNavigationService
 ,
             IAuthenticator authenticator,
-            ManagePizzaViewModel managePizzaViewModel)
+            ManagePizzaViewModel managePizzaViewModel,
+            IOrderService orderService)
         {
             _navigationStore = navigationStore;
             _authenticator = authenticator;
@@ -59,7 +63,8 @@ namespace PizzaShop.WPF.VIewModel
             ToggleCartCommand = new ToggleCartCommand(this);
 
 
-            CartViewModel = new CartViewModel();
+            this.orderService = orderService;
+            CartViewModel = new CartViewModel(orderService);
 
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _managePizzaViewModel = managePizzaViewModel;

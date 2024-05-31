@@ -8,7 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="View\Pizza4.jpg" />
+    <None Remove="Images\add.png" />
+    <None Remove="Images\delete.png" />
+    <None Remove="Images\picture.png" />
+    <None Remove="Images\Pizza1.jpg" />
+    <None Remove="Images\Pizza2.jpg" />
+    <None Remove="Images\Pizza3.jpg" />
+    <None Remove="Images\Pizza4.jpg" />
+    <None Remove="Images\Pizza5.jpg" />
+    <None Remove="Images\Pizza6.jpg" />
+    <None Remove="Images\Pizza7.jpg" />
+    <None Remove="Images\Pizza8.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Pizza3.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +36,6 @@
 
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="Images\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +44,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\Pizza4.jpg" />
+    <Resource Include="Images\add.png" />
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\picture.png" />
+    <Resource Include="Images\Pizza1.jpg" />
+    <Resource Include="Images\Pizza2.jpg" />
+    <Resource Include="Images\Pizza4.jpg" />
+    <Resource Include="Images\Pizza5.jpg" />
+    <Resource Include="Images\Pizza6.jpg" />
+    <Resource Include="Images\Pizza7.jpg" />
+    <Resource Include="Images\Pizza8.jpg" />
   </ItemGroup>
 
 </Project>

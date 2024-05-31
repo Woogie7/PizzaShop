@@ -5,8 +5,72 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PizzaShop.WPF.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Transparent">
-        <TextBlock Background="Yellow" Text="AS" Foreground="Wheat"></TextBlock> 
+             d:DesignHeight="450" d:DesignWidth="300">
+    <Grid Background="#FF9A0D">
+        <StackPanel Margin="10">
+            <!-- Header with total items and amount -->
+            <TextBlock x:Name="CartSummary"
+                       Foreground="#473F03"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Margin="0 0 0 20">
+                <Run Text="{Binding SumQuantity}"/>
+                <Run Text="товар(а) на сумму "/>
+                <Run Text="{Binding SumTotalAmount}"/>
+            </TextBlock>
+
+            <ItemsControl ItemsSource="{Binding Orders}" Background="White">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="0 0 0 10" Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding ImageSource}"
+                                       Width="80"
+                                       Height="80"
+                                       Margin="5"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+
+                                
+                                <StackPanel Grid.Column="1" Margin="10 0">
+                                    <TextBlock Text="{Binding PizzaName}"
+                                               FontSize="14"
+                                               FontWeight="Bold"
+                                               Margin="0 0 0 5"/>
+                                    <TextBlock Text="{Binding TotalPrice}"
+                                               FontSize="14"
+                                               Foreground="Green"
+                                               Margin="0 0 0 5"/>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Button Content="-" Width="25" Height="25" Margin="0 5 0 0" 
+                                               Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                               CommandParameter="{Binding}"/>
+                                        <TextBlock Text="{Binding Quantity}" FontSize="14" VerticalAlignment="Center"/>
+                                        <Button Content="+" Width="25" Height="25" Margin="5 0 0 0" 
+                                                Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"/>
+                                                
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Remove Button -->
+                                <Button Content="Удалить"
+                                        Grid.Column="2"
+                                        Margin="10 0 0 0"
+                                        VerticalAlignment="Center"
+                                        />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
     </Grid>
 </UserControl>
+

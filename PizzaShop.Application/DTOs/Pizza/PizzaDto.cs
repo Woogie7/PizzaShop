@@ -8,6 +8,8 @@ namespace PizzaShop.Application.DTOs.Pizza
 {
     public class PizzaDto
     {
+        private string _imageSource;
+
         public string Name { get; set; }
         public string[] Ingredients { get; set; }
 
@@ -19,6 +21,11 @@ namespace PizzaShop.Application.DTOs.Pizza
 
         public string Description { get; set; }
 
-        public string ImageSource { get; set; }
+        public string ImageSource
+        {
+            get => ".." + _imageSource;
+            set => _imageSource = value;
+        }
     }
+
 }

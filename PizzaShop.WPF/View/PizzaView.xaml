@@ -52,7 +52,7 @@
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <Image Source="/View/Pizza4.jpg" Grid.Row="0" Height="200" />
+                            <Image Source="{Binding ImageSource}" Grid.Row="0" Height="200" />
 
                             <TextBlock Text="{Binding Name}" FontSize="20" Foreground="Black" Grid.Row="1"/>
 

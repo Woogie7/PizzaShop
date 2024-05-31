@@ -41,11 +41,13 @@ namespace PizzaShop.WPF
                     service.AddSingleton<IAuthenticationService, AuthenticationService>();
                     service.AddScoped<IAuthenticator, Authenticator>();
                     service.AddScoped<IPizzaService, PizzaService>();
+                    service.AddScoped<IOrderService, OrderService>();
                     service.AddScoped<ISizeService, SizeService>();
                     service.AddScoped<ICategorySevice, CategoryService>();
                     service.AddScoped<IIngredientService, IngredientService>();
 
                     service.AddScoped<IPizzaRepository, PizzaRepository>();
+                    service.AddScoped<IOrderRepository, OrderRepository>();
                     service.AddScoped<ISizeRepository, SizeRepository>();
                     service.AddScoped<ICategoryRepository, CategoryRepository>();
                     service.AddScoped<IIngredientRepository, IngredientRepository>();
