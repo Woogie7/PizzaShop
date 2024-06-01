@@ -12,6 +12,6 @@ namespace PizzaShop.Application.Interface
     public interface IAuthenticationService
     {
         Task<RegistrationResult> Register(CreateUserDto userDto);
-        Task<User> Login(UserDto userDto);
+        Task<UserDto> Login(UserDto userDto);
     }
 }

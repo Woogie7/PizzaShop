@@ -30,9 +30,9 @@ namespace PizzaShop.WPF.VIewModel
 
         public string NameUser
         {
-            get { return _authenticator.CurrentUser?.UserName; }
+            get { return _authenticator.CurrentUser?.Email; }
             set {
-                _authenticator.CurrentUser.UserName = value;
+                _authenticator.CurrentUser.Email = value;
                 OnPropertyChanged(nameof(NameUser));
             }
         }
@@ -58,16 +58,17 @@ namespace PizzaShop.WPF.VIewModel
         {
             _navigationStore = navigationStore;
             _authenticator = authenticator;
+            this.orderService = orderService;
+            _managePizzaViewModel = managePizzaViewModel;
 
             LoginNavigateCommand = new NavigateCommand<LoginViewModel>(loginNavigationService);
             ToggleCartCommand = new ToggleCartCommand(this);
+            LogoutCommand = new LogoutCommand(_authenticator, this);
 
 
-            this.orderService = orderService;
             CartViewModel = new CartViewModel(orderService);
 
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            _managePizzaViewModel = managePizzaViewModel;
         }
 
         private void OnCurrentViewModelChanged()

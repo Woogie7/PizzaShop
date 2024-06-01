@@ -37,12 +37,22 @@ internal class PizzaProfile : Profile
             .ForMember(cerI => cerI.IngredientName, i => i.MapFrom(x => x.Name));
 
         CreateMap<Order, OrderDto>()
+            .ForMember(crtI => crtI.Id, i => i.MapFrom(x => x.Id))
             .ForMember(crtI => crtI.OrderNumber, i => i.MapFrom(x => x.OrderNumber))
             .ForMember(crtI => crtI.TotalPrice, i => i.MapFrom(x => x.Pizza.Price))
             .ForMember(crtI => crtI.Quantity, i => i.MapFrom(x => x.Quantity))
             .ForMember(crtI => crtI.ImageSource, i => i.MapFrom(x => x.Pizza.ImagePath))
             .ForMember(crtI => crtI.PizzaName, i => i.MapFrom(x => x.Pizza.Name))
             .ForMember(crtI => crtI.PizzaId, i => i.MapFrom(x => x.Pizza.Id));
+
+        CreateMap<OrderDto, Order>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.OrderNumber))
+            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.PizzaId, opt => opt.MapFrom(src => src.PizzaId))
+            .ForMember(dest => dest.Pizza, opt => opt.Ignore()) // Ignore navigation properties
+            .ForMember(dest => dest.User, opt => opt.Ignore()); // Ignore navigation properties
 
 
     }

@@ -77,7 +77,8 @@
                                 <TextBlock Text="{Binding Price, StringFormat='Цена: {0:C}'}" FontSize="12" VerticalAlignment="Center"/>
                                 <Button Content="Выбрать" Grid.Column="1" Width="75"  Height="25"
                                         HorizontalAlignment="Right" Background="#FFEFD5" Foreground="Orange"
-                                        />
+                                        Command="{Binding DataContext.AddPizzaToCart, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"/>
                             </Grid>
                         </Grid>
                     </Border>

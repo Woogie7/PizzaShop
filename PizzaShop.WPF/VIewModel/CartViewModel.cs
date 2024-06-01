@@ -54,21 +54,21 @@ namespace PizzaShop.WPF.VIewModel
 
         public CartViewModel(IOrderService orderSevice)
         {
+            _orderSevice = orderSevice;
+
             Orders = new ObservableCollection<OrderDto>();
 
-            IncreaseQuantityCommand = new IncreaseQuantityCommand(this);
-            DecreaseQuantityCommand = new DecreaseQuantityCommand(this);
+            IncreaseQuantityCommand = new IncreaseQuantityCommand(this, _orderSevice);
+            DecreaseQuantityCommand = new DecreaseQuantityCommand(this, _orderSevice);
 
 
             Orders.CollectionChanged += (s, e) => UpdateTotals();
 
-            _orderSevice = orderSevice;
-
             UpdateTotals();
-            LoadOrders();
+            LoadOrdersAsync();
         }
 
-        private async void LoadOrders()
+        public async Task LoadOrdersAsync()
         {
             Orders.Clear();
 

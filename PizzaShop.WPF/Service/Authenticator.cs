@@ -20,9 +20,9 @@ namespace PizzaShop.WPF.Service
             _authenticationService = authenticationService;
         }
 
-        private User _currentUser;
+        private UserDto _currentUser;
 
-        public User CurrentUser
+        public UserDto CurrentUser
         {
             get
             {
@@ -38,7 +38,7 @@ namespace PizzaShop.WPF.Service
 
         public bool IsLoggedIn => CurrentUser != null;
 
-        public async Task<User> Login(UserDto userDto)
+        public async Task<UserDto> Login(UserDto userDto)
         {
 
             CurrentUser = await _authenticationService.Login(userDto);

@@ -1,5 +1,6 @@
 ﻿using PizzaShop.Application.DTOs;
 using PizzaShop.Application.DTOs.Pizza;
+using PizzaShop.Application.DTOs.User;
 using PizzaShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace PizzaShop.Application.Interface.Repository
     public interface IOrderRepository
     {
         Task<IEnumerable<OrderDto>> GetAllAsync();
+        Task CreateOrder(OrderDto orderDto);
+        Task IncreaseQuantity(OrderDto orderDto);
+        Task DecreaseQuantity(OrderDto orderDto);
 
     }
 }

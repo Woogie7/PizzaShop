@@ -10,6 +10,7 @@ namespace PizzaShop.Application.DTOs.Pizza
     {
         private string _imageSource;
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string[] Ingredients { get; set; }
 

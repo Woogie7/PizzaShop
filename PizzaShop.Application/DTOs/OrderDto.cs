@@ -9,7 +9,10 @@ namespace PizzaShop.Application.DTOs
     public class OrderDto
     {
         private string _imageSource;
+     
+        public int Id { get; set; }
         public string OrderNumber { get; set; }
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public int PizzaId { get; set; }
         public string PizzaName { get; set; }

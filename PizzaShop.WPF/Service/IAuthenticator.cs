@@ -12,10 +12,10 @@ namespace PizzaShop.WPF.Service
 {
     public interface IAuthenticator
     {
-        User CurrentUser { get; }
+        UserDto CurrentUser { get; }
         bool IsLoggedIn { get; }
         Task<RegistrationResult> Register(CreateUserDto userDto);
-        Task<User> Login(UserDto userDto);
+        Task<UserDto> Login(UserDto userDto);
         void Logout();
 
     }

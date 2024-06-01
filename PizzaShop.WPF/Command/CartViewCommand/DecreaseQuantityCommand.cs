@@ -1,4 +1,5 @@
 ﻿using PizzaShop.Application.DTOs;
+using PizzaShop.Application.Interface;
 using PizzaShop.WPF.Core;
 using PizzaShop.WPF.VIewModel;
 using System;
@@ -9,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace PizzaShop.WPF.Command.CartViewCommand
 {
-    internal class DecreaseQuantityCommand : BaseCommand
+    internal class DecreaseQuantityCommand : AsyncCommandBase
     {
         private readonly CartViewModel _cartViewModel;
+        private readonly IOrderService _orderService;
 
-        public DecreaseQuantityCommand(CartViewModel cartViewModel)
+        public DecreaseQuantityCommand(CartViewModel cartViewModel, IOrderService orderService)
         {
             _cartViewModel = cartViewModel;
+            _orderService = orderService;
         }
 
         public override bool CanExecute(object parameter)
@@ -27,12 +30,12 @@ namespace PizzaShop.WPF.Command.CartViewCommand
             return false;
         }
 
-        public override void Execute(object parameter)
+        public async override Task ExecuteAsync(object parameter)
         {
             if (parameter is OrderDto order)
             {
-                order.Quantity--;
-                _cartViewModel.UpdateTotals();
+                await _orderService.DecreaseQuantity(order);
+                await _cartViewModel.LoadOrdersAsync(); 
             }
         }
     }

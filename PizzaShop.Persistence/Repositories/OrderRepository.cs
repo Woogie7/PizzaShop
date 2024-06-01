@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PizzaShop.Application.DTOs;
 using PizzaShop.Application.DTOs.Pizza;
+using PizzaShop.Application.DTOs.User;
 using PizzaShop.Application.Interface.Repository;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Persistence.Context;
@@ -25,27 +26,34 @@ namespace PizzaShop.Persistence.Repositories
             _mapper = mapper;
         }
 
+        public async Task IncreaseQuantity(OrderDto orderDto)
+        {
+            using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+                var order = await context.Orders.FirstOrDefaultAsync(p => p.Id == orderDto.Id);
+
+                order.Quantity++;
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DecreaseQuantity(OrderDto orderDto)
+        {
+            using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+                var order = await context.Orders.FirstOrDefaultAsync(p => p.Id == orderDto.Id);
+
+                order.Quantity--;
+
+                await context.SaveChangesAsync();
+            }
+        }
+
         public async Task<IEnumerable<OrderDto>> GetAllAsync()
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
-                var pizza = await context.Pizzas.FirstOrDefaultAsync(p => p.Id == 1);
-                var user = await context.Users.FirstOrDefaultAsync(p => p.Role.Name == "Admin");
-
-                var order = new Order()
-                {
-                    OrderNumber = "214",
-                    Pizza = pizza,
-                    PizzaId = pizza.Id,
-                    Quantity = 2,
-                    User = user,
-                    UserId = user.Id
-                };
-
-                await context.Orders.AddAsync(order);
-                await context.SaveChangesAsync();
-
-
 
                 IEnumerable<Order> entities = await context.Orders
                     .AsNoTracking()
@@ -58,6 +66,23 @@ namespace PizzaShop.Persistence.Repositories
                 var orders = entities.Select(order => _mapper.Map<OrderDto>(order));
 
                 return orders;
+            }
+        }
+
+        public async Task CreateOrder(OrderDto orderDto)
+        {
+            using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+                var order = _mapper.Map<Order>(orderDto);
+
+                var pizza = await context.Pizzas.FirstOrDefaultAsync(c => c.Id == order.PizzaId);
+                var user = await context.Users.FirstOrDefaultAsync(c => c.Id == order.UserId);
+
+                order.Pizza = pizza;
+                order.User = user;
+
+                await context.Orders.AddAsync(order);
+                await context.SaveChangesAsync();
             }
         }
     }

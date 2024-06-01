@@ -1,6 +1,8 @@
 ﻿using PizzaShop.Application.DTOs;
+using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.Interface;
 using PizzaShop.WPF.Core;
+using PizzaShop.WPF.Service;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;
@@ -8,26 +10,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.WPF.Command.CartViewCommand
+namespace PizzaShop.WPF.Command
 {
-    internal class IncreaseQuantityCommand : AsyncCommandBase
+    internal class AddPizzaToCart : AsyncCommandBase
     {
-        private readonly CartViewModel _cartViewModel;
+        private readonly IAuthenticator _authenticator;
         private readonly IOrderService _orderService;
 
-        public IncreaseQuantityCommand(CartViewModel cartViewModel, IOrderService orderService)
+        public AddPizzaToCart(IOrderService orderService, IAuthenticator authenticator)
         {
-            _cartViewModel = cartViewModel;
             _orderService = orderService;
+            _authenticator = authenticator;
         }
 
         public async override Task ExecuteAsync(object parameter)
         {
-            if (parameter is OrderDto order)
+            if (parameter is PizzaDto pizza)
             {
-                await _orderService.IncreaseQuantity(order);
-                await _cartViewModel.LoadOrdersAsync();
-
+                await _orderService.CreateOrder(pizza, _authenticator.CurrentUser);
+                await
             }
         }
     }

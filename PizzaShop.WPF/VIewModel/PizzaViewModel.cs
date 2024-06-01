@@ -19,6 +19,7 @@ namespace PizzaShop.WPF.VIewModel
     class PizzaViewModel : ObservaleObject
     {
         private readonly IPizzaService _pizzaService;
+        private readonly IOrderService _orderService;
         private readonly IAuthenticator _authenticator;
 
         public ObservableCollection<PizzaDto> Pizzas { get; set; }
@@ -47,16 +48,23 @@ namespace PizzaShop.WPF.VIewModel
             }
         }
         public ICommand AddPizzaCommand { get;}
+        public ICommand AddPizzaToCart { get;}
 
 
-        public PizzaViewModel(IPizzaService pizzaService, IAuthenticator authenticator, NavigationService<ManagePizzaViewModel> navigateCommand)
+        public PizzaViewModel(IPizzaService pizzaService,
+                              IAuthenticator authenticator,
+                              NavigationService<ManagePizzaViewModel> navigateCommand,
+                              IOrderService orderService)
         {
             _authenticator = authenticator;
             _pizzaService = pizzaService;
+            _orderService = orderService;
+         
             Pizzas = new ObservableCollection<PizzaDto>();
             PizzaCollectionView = CollectionViewSource.GetDefaultView(Pizzas);
 
             AddPizzaCommand = new NavigateCommand<ManagePizzaViewModel>(navigateCommand);
+            AddPizzaToCart = new AddPizzaToCart(_orderService, _authenticator);
 
             PizzaCollectionView.Filter = FillterPizzas;
             PizzaCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PizzaDto.Name)));
@@ -70,7 +78,7 @@ namespace PizzaShop.WPF.VIewModel
             if(_authenticator.CurrentUser != null)
             {
                 var currentUser = _authenticator.CurrentUser;
-                IsAdmin = currentUser.Role.Name.Contains("Admin");
+                IsAdmin = currentUser.Role == "Admin";
             }
         }
 
@@ -88,10 +96,10 @@ namespace PizzaShop.WPF.VIewModel
             Pizzas.Clear();
             var adllPizzas = await _pizzaService.GetPizzaAllAsync();
 
-            Pizzas.Add(new PizzaDto { Name = "Маргарита", Ingredients = new[] { "Соус", "Сыр", "Базилик" }, Size = "Средняя", Category = "Классические", Price = 250, Description = "Классическая и всегда популярная пицца с соусом, сыром и базиликом.", ImageSource = "/Images/Pizza1.jpg" });
-            Pizzas.Add(new PizzaDto { Name = "Пепперони", Ingredients = new[] { "Соус", "Сыр", "Пепперони" }, Size = "Большая", Category = "Мясные", Price = 300, Description = "Сытная пицца с острой колбасой пепперони.", ImageSource = "/Images/Pizza2.jpg" });
-            Pizzas.Add(new PizzaDto { Name = "Гавайская", Ingredients = new[] { "Соус", "Сыр", "Ветчина", "Ананасы" }, Size = "Средняя", Category = "Фруктовые", Price = 280, Description = "Нежная и сладкая пицца с ветчиной и ананасами.", ImageSource = "/Images/Pizza3.jpg" });
-            Pizzas.Add(new PizzaDto { Name = "Новая", Ingredients = new[] { "Соус", "Сыр", "Ветчина", "Ананасы" }, Size = "Средняя", Category = "Фруктовые", Price = 280, Description = "Нежная и сладкая пицца с ветчиной и ананасами.", ImageSource = "/Images/Pizza4.jpg" });
+            //Pizzas.Add(new PizzaDto { Name = "Маргарита", Ingredients = new[] { "Соус", "Сыр", "Базилик" }, Size = "Средняя", Category = "Классические", Price = 250, Description = "Классическая и всегда популярная пицца с соусом, сыром и базиликом.", ImageSource = "/Images/Pizza1.jpg" });
+            //Pizzas.Add(new PizzaDto { Name = "Пепперони", Ingredients = new[] { "Соус", "Сыр", "Пепперони" }, Size = "Большая", Category = "Мясные", Price = 300, Description = "Сытная пицца с острой колбасой пепперони.", ImageSource = "/Images/Pizza2.jpg" });
+            //Pizzas.Add(new PizzaDto { Name = "Гавайская", Ingredients = new[] { "Соус", "Сыр", "Ветчина", "Ананасы" }, Size = "Средняя", Category = "Фруктовые", Price = 280, Description = "Нежная и сладкая пицца с ветчиной и ананасами.", ImageSource = "/Images/Pizza3.jpg" });
+            //Pizzas.Add(new PizzaDto { Name = "Новая", Ingredients = new[] { "Соус", "Сыр", "Ветчина", "Ананасы" }, Size = "Средняя", Category = "Фруктовые", Price = 280, Description = "Нежная и сладкая пицца с ветчиной и ананасами.", ImageSource = "/Images/Pizza4.jpg" });
 
             foreach (var income in adllPizzas)
             {
