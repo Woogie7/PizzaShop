@@ -12,13 +12,13 @@ namespace PizzaShop.WPF.Command.CartViewCommand
 {
     internal class IncreaseQuantityCommand : AsyncCommandBase
     {
-        private readonly CartViewModel _cartViewModel;
         private readonly IOrderService _orderService;
+        private readonly ICartService _cartService;
 
-        public IncreaseQuantityCommand(CartViewModel cartViewModel, IOrderService orderService)
+        public IncreaseQuantityCommand(IOrderService orderService, ICartService cartService)
         {
-            _cartViewModel = cartViewModel;
             _orderService = orderService;
+            _cartService = cartService;
         }
 
         public async override Task ExecuteAsync(object parameter)
@@ -26,7 +26,7 @@ namespace PizzaShop.WPF.Command.CartViewCommand
             if (parameter is OrderDto order)
             {
                 await _orderService.IncreaseQuantity(order);
-                await _cartViewModel.LoadOrdersAsync();
+                await _cartService.ClearOrders();
 
             }
         }

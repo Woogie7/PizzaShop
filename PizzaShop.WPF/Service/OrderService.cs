@@ -51,5 +51,10 @@ namespace PizzaShop.WPF.Service
 
             await _orderRepository.CreateOrder(orderDto);
         }
+
+        public async Task DeleteOrder(OrderDto orderDto)
+        {
+            await _orderRepository.DeleteOrder(orderDto);
+        }
     }
 }

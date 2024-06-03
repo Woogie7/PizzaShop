@@ -15,8 +15,8 @@ namespace PizzaShop.Application.Interface.Repository
     {
         Task<IEnumerable<OrderDto>> GetAllAsync();
         Task CreateOrder(OrderDto orderDto);
+        Task DeleteOrder(OrderDto orderDto);
         Task IncreaseQuantity(OrderDto orderDto);
         Task DecreaseQuantity(OrderDto orderDto);
-
     }
 }

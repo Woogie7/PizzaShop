@@ -17,19 +17,17 @@ namespace PizzaShop.WPF.VIewModel
 {
     public class CartViewModel : ObservaleObject
     {
-        private readonly IOrderService _orderSevice;
-
+        private readonly ICartService _cartService;
+        private readonly IOrderService _orderService;
 
         private int _quantity;
 
         public int SumQuantity
         {
-            get 
-            { 
-                return _quantity; 
-            }
-            set { 
-                _quantity = value; 
+            get { return _quantity; }
+            set
+            {
+                _quantity = value;
                 OnPropertyChanged();
             }
         }
@@ -39,45 +37,29 @@ namespace PizzaShop.WPF.VIewModel
         public decimal SumTotalAmount
         {
             get { return _totalAmount; }
-            set { 
+            set
+            {
                 _totalAmount = value;
                 OnPropertyChanged();
             }
         }
 
-
         public ICommand IncreaseQuantityCommand { get; }
         public ICommand DecreaseQuantityCommand { get; }
+        public ICommand DeletePizzaInCart { get; }
 
+        public ObservableCollection<OrderDto> Orders => _cartService.Orders;
 
-        public ObservableCollection<OrderDto> Orders{ get; set; }
-
-        public CartViewModel(IOrderService orderSevice)
+        public CartViewModel(ICartService cartService, IOrderService orderService)
         {
-            _orderSevice = orderSevice;
+            _cartService = cartService;
+            _orderService = orderService;
 
-            Orders = new ObservableCollection<OrderDto>();
+            IncreaseQuantityCommand = new IncreaseQuantityCommand(_orderService, _cartService);
+            DecreaseQuantityCommand = new DecreaseQuantityCommand(_orderService, _cartService);
+            DeletePizzaInCart = new DeletePizzaInCart(_orderService, _cartService);
 
-            IncreaseQuantityCommand = new IncreaseQuantityCommand(this, _orderSevice);
-            DecreaseQuantityCommand = new DecreaseQuantityCommand(this, _orderSevice);
-
-
-            Orders.CollectionChanged += (s, e) => UpdateTotals();
-
-            UpdateTotals();
-            LoadOrdersAsync();
-        }
-
-        public async Task LoadOrdersAsync()
-        {
-            Orders.Clear();
-
-            var allOrders = await _orderSevice.GetAllOrderAsync();
-
-            foreach (var order in allOrders)
-            {
-                Orders.Add(order);
-            }
+            _cartService.OrdersUpdated += (s, e) => UpdateTotals();
 
             UpdateTotals();
         }
@@ -86,11 +68,8 @@ namespace PizzaShop.WPF.VIewModel
         {
             SumQuantity = Orders.Sum(order => order.Quantity);
             SumTotalAmount = Orders.Sum(order => order.TotalPrice);
-            OnPropertyChanged(nameof(Orders));
         }
-
-
-
     }
+
 }
 

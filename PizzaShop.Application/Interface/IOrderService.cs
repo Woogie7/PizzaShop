@@ -14,6 +14,7 @@ namespace PizzaShop.Application.Interface
     {
         Task<IEnumerable<OrderDto>> GetAllOrderAsync();
         Task CreateOrder(PizzaDto pizzaDto, UserDto user);
+        Task DeleteOrder(OrderDto orderDto);
         Task IncreaseQuantity(OrderDto orderDto);
         Task DecreaseQuantity(OrderDto orderDto);
     }

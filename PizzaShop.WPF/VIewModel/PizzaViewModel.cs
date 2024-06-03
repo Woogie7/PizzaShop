@@ -21,6 +21,7 @@ namespace PizzaShop.WPF.VIewModel
         private readonly IPizzaService _pizzaService;
         private readonly IOrderService _orderService;
         private readonly IAuthenticator _authenticator;
+        private readonly ICartService _cartService;
 
         public ObservableCollection<PizzaDto> Pizzas { get; set; }
         public ICollectionView PizzaCollectionView { get; }
@@ -54,17 +55,19 @@ namespace PizzaShop.WPF.VIewModel
         public PizzaViewModel(IPizzaService pizzaService,
                               IAuthenticator authenticator,
                               NavigationService<ManagePizzaViewModel> navigateCommand,
-                              IOrderService orderService)
+                              IOrderService orderService,
+                              ICartService cartService)
         {
             _authenticator = authenticator;
             _pizzaService = pizzaService;
             _orderService = orderService;
-         
+            _cartService = cartService;
+
             Pizzas = new ObservableCollection<PizzaDto>();
             PizzaCollectionView = CollectionViewSource.GetDefaultView(Pizzas);
 
             AddPizzaCommand = new NavigateCommand<ManagePizzaViewModel>(navigateCommand);
-            AddPizzaToCart = new AddPizzaToCart(_orderService, _authenticator);
+            AddPizzaToCart = new AddPizzaToCart(_orderService, _authenticator, _cartService);
 
             PizzaCollectionView.Filter = FillterPizzas;
             PizzaCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PizzaDto.Name)));

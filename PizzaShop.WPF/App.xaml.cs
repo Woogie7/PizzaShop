@@ -45,6 +45,7 @@ namespace PizzaShop.WPF
                     service.AddScoped<ISizeService, SizeService>();
                     service.AddScoped<ICategorySevice, CategoryService>();
                     service.AddScoped<IIngredientService, IngredientService>();
+                    service.AddScoped<ICartService, CartService>();
 
                     service.AddScoped<IPizzaRepository, PizzaRepository>();
                     service.AddScoped<IOrderRepository, OrderRepository>();

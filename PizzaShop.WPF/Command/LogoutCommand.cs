@@ -26,6 +26,7 @@ namespace PizzaShop.WPF.Command
         {
             _authenticator.Logout();
             _mainViewModel.LoginNavigateCommand.Execute(parameter);
+            _mainViewModel.IsCartVisible = false;
         }
     }
 }

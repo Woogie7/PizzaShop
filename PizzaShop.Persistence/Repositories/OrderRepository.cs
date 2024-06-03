@@ -81,7 +81,33 @@ namespace PizzaShop.Persistence.Repositories
                 order.Pizza = pizza;
                 order.User = user;
 
-                await context.Orders.AddAsync(order);
+                var findOrder = await context.Orders.FirstOrDefaultAsync(p => p.PizzaId == order.PizzaId);
+                if(findOrder != null)
+                {
+                    findOrder.Quantity++;
+                }
+                else
+                {
+                    await context.Orders.AddAsync(order);
+                }
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteOrder(OrderDto orderDto)
+        {
+            using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+                var order = _mapper.Map<Order>(orderDto);
+
+                var pizza = await context.Pizzas.FirstOrDefaultAsync(c => c.Id == order.PizzaId);
+                var user = await context.Users.FirstOrDefaultAsync(c => c.Id == order.UserId);
+
+                order.Pizza = pizza;
+                order.User = user;
+
+                context.Orders.Remove(order);
                 await context.SaveChangesAsync();
             }
         }

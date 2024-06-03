@@ -1,8 +1,6 @@
 ﻿using PizzaShop.Application.DTOs;
-using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.Interface;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;
@@ -10,26 +8,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.WPF.Command
+namespace PizzaShop.WPF.Command.CartViewCommand
 {
-    internal class AddPizzaToCart : AsyncCommandBase
+    internal class DeletePizzaInCart : AsyncCommandBase
     {
-        private readonly IAuthenticator _authenticator;
         private readonly IOrderService _orderService;
         private readonly ICartService _cartService;
 
-        public AddPizzaToCart(IOrderService orderService, IAuthenticator authenticator, ICartService cartService)
+        public DeletePizzaInCart(IOrderService orderService, ICartService cartService)
         {
             _orderService = orderService;
-            _authenticator = authenticator;
             _cartService = cartService;
         }
 
+
         public async override Task ExecuteAsync(object parameter)
         {
-            if (parameter is PizzaDto pizza)
+            if (parameter is OrderDto order)
             {
-                await _orderService.CreateOrder(pizza, _authenticator.CurrentUser);
+                await _orderService.DeleteOrder(order);
                 await _cartService.ClearOrders();
             }
         }
