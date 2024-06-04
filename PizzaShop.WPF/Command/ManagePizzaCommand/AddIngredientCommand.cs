@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.WPF.Command
+namespace PizzaShop.WPF.Command.ManagePizzaCommand
 {
-    internal class DeleteIngredientCommand : BaseCommand
+    internal class AddIngredientCommand : BaseCommand
     {
         private readonly ManagePizzaViewModel _managePizzaViewModel;
 
-        public DeleteIngredientCommand(ManagePizzaViewModel managePizzaViewModel)
+        public AddIngredientCommand(ManagePizzaViewModel managePizzaViewModel)
         {
             _managePizzaViewModel = managePizzaViewModel;
             _managePizzaViewModel.PropertyChanged += (s, e) =>
@@ -22,20 +22,21 @@ namespace PizzaShop.WPF.Command
                     OnCanExecuteChanged();
                 }
             };
+
+
         }
 
         public override bool CanExecute(object parameter)
         {
-            var ass = _managePizzaViewModel.SelectedIngredient != null &&
-                   _managePizzaViewModel.PizzaIngredients.Contains(_managePizzaViewModel.SelectedIngredient) &&
+            return _managePizzaViewModel.SelectedIngredient != null &&
+                   !_managePizzaViewModel.PizzaIngredients.Contains(_managePizzaViewModel.SelectedIngredient) &&
                    base.CanExecute(parameter);
-
-            return ass;
         }
 
         public override void Execute(object parameter)
         {
-            _managePizzaViewModel.PizzaIngredients.Remove(_managePizzaViewModel.SelectedIngredient);
+            _managePizzaViewModel.PizzaIngredients.Add(_managePizzaViewModel.SelectedIngredient);
         }
     }
+
 }

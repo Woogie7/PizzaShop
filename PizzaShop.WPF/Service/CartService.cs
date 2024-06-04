@@ -12,10 +12,12 @@ namespace PizzaShop.WPF.Service
     public class CartService : ICartService
     {
         private readonly IOrderService _orderSevice;
+        private readonly IAuthenticator _authenticator;
 
-        public CartService(IOrderService orderSevice)
+        public CartService(IOrderService orderSevice, IAuthenticator authenticator)
         {
             _orderSevice = orderSevice;
+            _authenticator = authenticator;
         }
 
         public ObservableCollection<OrderDto> Orders { get; private set; } = new ObservableCollection<OrderDto>();
@@ -38,7 +40,7 @@ namespace PizzaShop.WPF.Service
         {
             Orders.Clear();
 
-            var allOrders = await _orderSevice.GetAllOrderAsync();
+            var allOrders = await _orderSevice.GetAllOrderAsync(_authenticator.CurrentUser);
 
             foreach (var order in allOrders)
             {

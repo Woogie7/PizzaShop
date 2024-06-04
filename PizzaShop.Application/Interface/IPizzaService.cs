@@ -6,6 +6,7 @@ namespace PizzaShop.Application.Interface
     {
         Task<IEnumerable<PizzaDto>> GetPizzaAllAsync();
         Task<CreatePizzaDto> AddPizzaAsync(CreatePizzaDto newPizza);
+        Task UpdatePizzaAsync(UpdatePizzaDto updatedPizza);
         Task DeletePizzaAsync(PizzaDto pizzaDto);
     }
 }

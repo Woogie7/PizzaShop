@@ -1,7 +1,6 @@
 ﻿using PizzaShop.Application.Interface;
 using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
 using PizzaShop.WPF.Service.Store;
 using System.Windows.Input;
 

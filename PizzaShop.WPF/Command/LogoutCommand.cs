@@ -1,5 +1,5 @@
-﻿using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
+﻿using PizzaShop.Application.Interface;
+using PizzaShop.WPF.Core;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,7 @@ namespace PizzaShop.WPF.Command
             _authenticator.Logout();
             _mainViewModel.LoginNavigateCommand.Execute(parameter);
             _mainViewModel.IsCartVisible = false;
+            _mainViewModel.CartViewModel.Orders.Clear();
         }
     }
 }

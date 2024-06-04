@@ -12,7 +12,7 @@ namespace PizzaShop.Application.Interface
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderDto>> GetAllOrderAsync();
+        Task<IEnumerable<OrderDto>> GetAllOrderAsync(UserDto currentUser);
         Task CreateOrder(PizzaDto pizzaDto, UserDto user);
         Task DeleteOrder(OrderDto orderDto);
         Task IncreaseQuantity(OrderDto orderDto);

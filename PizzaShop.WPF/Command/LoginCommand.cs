@@ -1,6 +1,6 @@
-﻿using PizzaShop.Domain.Exceptions;
+﻿using PizzaShop.Application.Interface;
+using PizzaShop.Domain.Exceptions;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;

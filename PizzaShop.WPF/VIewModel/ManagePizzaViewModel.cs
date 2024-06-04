@@ -2,11 +2,8 @@
 using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.DTOs.Size;
 using PizzaShop.Application.Interface;
-using PizzaShop.Domain.Entities;
-using PizzaShop.WPF.Command;
+using PizzaShop.WPF.Command.ManagePizzaCommand;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,12 +36,10 @@ namespace PizzaShop.WPF.VIewModel
 
         public string Name
         {
-            get {
-                if (SelectedPizza != null)
-                {
-                    return SelectedPizza.Name;
-                }
-                return name; }
+            get
+            {
+                return name;
+            }
             set
             {
                 name = value;
@@ -67,13 +62,10 @@ namespace PizzaShop.WPF.VIewModel
 
         public SizeDto SelectedSize
         {
-            get {
-                if (SelectedPizza != null)
-                {
-                    return Sizes.FirstOrDefault(c => c.SizeName == SelectedPizza.Size);
-
-                }
-                return selectedSize; }
+            get
+            {
+                return selectedSize;
+            }
             set
             {
                 selectedSize = value;
@@ -83,29 +75,23 @@ namespace PizzaShop.WPF.VIewModel
 
         public CategoryDto SelectedCategory
         {
-            get {
-                if (SelectedPizza != null)
-                {
-                    return Categories.FirstOrDefault(c => c.CategoryName == SelectedPizza.Category);
-
-                }
-                return selectedCategory; }
+            get
+            {
+                return selectedCategory;
+            }
             set
             {
                 selectedCategory = value;
-                OnPropertyChanged(nameof(CategoryDto));
+                OnPropertyChanged(nameof(SelectedCategory));
             }
         }
 
         public decimal Price
         {
-            get {
-                if (SelectedPizza != null)
-                {
-                    return SelectedPizza.Price;
-
-                }
-                return price; }
+            get
+            {
+                return price;
+            }
             set
             {
                 price = value;
@@ -115,16 +101,13 @@ namespace PizzaShop.WPF.VIewModel
 
         public string Description
         {
-            get {
-                if (SelectedPizza != null)
-                {
-                    return SelectedPizza.Description;
-                    
-                }
-                return description; }
+            get
+            {
+                return description;
+            }
             set
             {
-                
+
                 description = value;
                 OnPropertyChanged(nameof(Description));
             }
@@ -139,13 +122,21 @@ namespace PizzaShop.WPF.VIewModel
             set
             {
                 selectedPizza = value;
-                OnPropertyChanged(nameof(Name));
+                if (selectedPizza == null)
+                {
+                    Name = string.Empty;
+                    SelectedSize = null;
+                    SelectedCategory = null;
+                    Price = 0;
+                    Description = string.Empty;
+                    PizzaIngredients.Clear();
+                }
+                else
+                {
+                    InitializeFieldsFromSelectedPizza();
+                }
+
                 OnPropertyChanged(nameof(SelectedPizza));
-                OnPropertyChanged(nameof(SelectedSize));
-                OnPropertyChanged(nameof(SelectedCategory));
-                OnPropertyChanged(nameof(Price));
-                OnPropertyChanged(nameof(Description));
-                UpdatePizzaIngredients();
             }
         }
 
@@ -157,6 +148,7 @@ namespace PizzaShop.WPF.VIewModel
 
         public ICommand AddNewPizzaCommand { get; set; }
         public ICommand DeletePizzaCommand { get; set; }
+        public ICommand RefershPizzaUpdate { get; set; }
 
         public ManagePizzaViewModel(IPizzaService pizzaService, ISizeService sizeService, ICategorySevice categoryService, IIngredientService ingredientSevice)
         {
@@ -173,6 +165,7 @@ namespace PizzaShop.WPF.VIewModel
 
             AddIngredientCommand = new AddIngredientCommand(this);
             DeleteIngredientCommand = new DeleteIngredientCommand(this);
+
             AddNewPizzaCommand = new AddNewPizzaCommand(this, _pizzaService);
             DeletePizzaCommand = new DeletePizzaCommand(this, _pizzaService);
 
@@ -231,18 +224,41 @@ namespace PizzaShop.WPF.VIewModel
             if (SelectedPizza != null && SelectedPizza.Ingredients != null)
             {
                 PizzaIngredients.Clear();
-                
+
                 var filteredIngredients = Ingredients
                     .Where(i => SelectedPizza.Ingredients.Contains(i.IngredientName))
                     .ToList();
 
-                foreach(var f in filteredIngredients)
+                foreach (var f in filteredIngredients)
                 {
                     PizzaIngredients.Add(f);
                 }
-               
+
             }
         }
+
+        private void InitializeFieldsFromSelectedPizza()
+        {
+            if (selectedPizza != null)
+            {
+                Name = selectedPizza.Name;
+                SelectedSize = Sizes.FirstOrDefault(c => c.SizeName == selectedPizza.Size);
+                SelectedCategory = Categories.FirstOrDefault(c => c.CategoryName == selectedPizza.Category);
+                Price = selectedPizza.Price;
+                Description = selectedPizza.Description;
+
+                PizzaIngredients.Clear();
+                var filteredIngredients = Ingredients
+                    .Where(i => selectedPizza.Ingredients.Contains(i.IngredientName))
+                    .ToList();
+
+                foreach (var f in filteredIngredients)
+                {
+                    PizzaIngredients.Add(f);
+                }
+            }
+        }
+
 
     }
 }

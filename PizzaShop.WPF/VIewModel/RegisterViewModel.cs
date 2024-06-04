@@ -1,8 +1,8 @@
 ﻿using PizzaShop.Application.DTOs.User;
+using PizzaShop.Application.Interface;
 using PizzaShop.Domain.Entities;
 using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
 using PizzaShop.WPF.Service.Store;
 using System;
 using System.Collections;

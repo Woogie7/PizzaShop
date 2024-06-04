@@ -1,14 +1,7 @@
 ﻿using PizzaShop.Application.DTOs.User;
-using PizzaShop.Domain.Entities;
 using PizzaShop.Domain.Enum;
-using PizzaShop.WPF.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PizzaShop.WPF.Service
+namespace PizzaShop.Application.Interface
 {
     public interface IAuthenticator
     {

@@ -39,7 +39,7 @@ namespace PizzaShop.Infrastructure.Authentication
                 throw new InvalidPasswordException(user.Email, user.PasswordHash);
             }
 
-            userDto.Id = user.Id.ToString();
+            userDto.Id = user.Id;
             userDto.Role = user.Role.Name;
 
             return userDto;

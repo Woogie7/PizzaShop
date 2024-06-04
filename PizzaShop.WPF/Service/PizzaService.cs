@@ -32,5 +32,10 @@ namespace PizzaShop.WPF.Service
         {
             return await _repository.GetAllAsync();
         }
+
+        public async Task UpdatePizzaAsync(UpdatePizzaDto updatedPizza)
+        {
+            await _repository.UpdateAsync(updatedPizza);
+        }
     }
 }

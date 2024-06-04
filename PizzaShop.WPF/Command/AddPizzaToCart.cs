@@ -2,7 +2,6 @@
 using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.Interface;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;

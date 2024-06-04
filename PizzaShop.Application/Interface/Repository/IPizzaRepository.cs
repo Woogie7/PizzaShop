@@ -13,7 +13,7 @@ namespace PizzaShop.Application.Interface.Repository
         Task<Pizza> GetByIdAsync(int id);
         Task<IEnumerable<PizzaDto>> GetAllAsync();
         Task<CreatePizzaDto> AddAsync(CreatePizzaDto newPizza);
-        Task UpdateAsync(Pizza entity);
+        Task UpdateAsync(UpdatePizzaDto pizzaDto);
         Task DeleteAsync(PizzaDto pizzaDto);
         Task DeleteAllAsync();
     }

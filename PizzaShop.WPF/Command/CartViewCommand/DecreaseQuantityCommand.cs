@@ -25,7 +25,7 @@ namespace PizzaShop.WPF.Command.CartViewCommand
         {
             if (parameter is OrderDto order)
             {
-                return order.Quantity > 0;
+                return order.Quantity > 1;
             }
             return false;
         }

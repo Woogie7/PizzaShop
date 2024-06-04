@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaShop.WPF.Command
+namespace PizzaShop.WPF.Command.ManagePizzaCommand
 {
     internal class DeletePizzaCommand : AsyncCommandBase
     {

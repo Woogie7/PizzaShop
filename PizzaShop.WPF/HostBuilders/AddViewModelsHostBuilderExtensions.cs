@@ -39,6 +39,10 @@ namespace PizzaShop.WPF.HostBuilders
                 services.AddTransient<CartViewModel>();
                 services.AddSingleton<Func<CartViewModel>>(s => () => s.GetRequiredService<CartViewModel>());
                 services.AddSingleton<NavigationService<CartViewModel>>();
+                
+                services.AddTransient<ReportViewModel>();
+                services.AddSingleton<Func<ReportViewModel>>(s => () => s.GetRequiredService<ReportViewModel>());
+                services.AddSingleton<NavigationService<ReportViewModel>>();
 
                 services.AddSingleton<MainWindow>(s => new MainWindow()
                 {

@@ -1,16 +1,10 @@
 ﻿using PizzaShop.Application.DTOs;
-using PizzaShop.Application.DTOs.Pizza;
 using PizzaShop.Application.Interface;
-using PizzaShop.Domain.Entities;
+using PizzaShop.WPF.Command;
 using PizzaShop.WPF.Command.CartViewCommand;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PizzaShop.WPF.VIewModel
@@ -47,6 +41,7 @@ namespace PizzaShop.WPF.VIewModel
         public ICommand IncreaseQuantityCommand { get; }
         public ICommand DecreaseQuantityCommand { get; }
         public ICommand DeletePizzaInCart { get; }
+        public ICommand PlaceOrderCommand { get; }
 
         public ObservableCollection<OrderDto> Orders => _cartService.Orders;
 
@@ -58,6 +53,7 @@ namespace PizzaShop.WPF.VIewModel
             IncreaseQuantityCommand = new IncreaseQuantityCommand(_orderService, _cartService);
             DecreaseQuantityCommand = new DecreaseQuantityCommand(_orderService, _cartService);
             DeletePizzaInCart = new DeletePizzaInCart(_orderService, _cartService);
+            PlaceOrderCommand = new PlaceOrderCommand(this);
 
             _cartService.OrdersUpdated += (s, e) => UpdateTotals();
 

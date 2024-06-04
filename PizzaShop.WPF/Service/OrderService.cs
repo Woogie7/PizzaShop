@@ -30,7 +30,7 @@ namespace PizzaShop.WPF.Service
             await _orderRepository.DecreaseQuantity(orderDto);
         }
 
-        public async Task<IEnumerable<OrderDto>> GetAllOrderAsync()
+        public async Task<IEnumerable<OrderDto>> GetAllOrderAsync(UserDto currentUser)
         {
             return await _orderRepository.GetAllAsync();
         }

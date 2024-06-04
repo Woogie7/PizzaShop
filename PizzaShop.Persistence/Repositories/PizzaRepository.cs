@@ -7,6 +7,7 @@ using PizzaShop.Persistence.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -91,9 +92,36 @@ namespace PizzaShop.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(Pizza entity)
+        public async Task UpdateAsync(UpdatePizzaDto pizzaDto)
         {
-            throw new NotImplementedException();
+            using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
+            {
+                var updatedPizza = await context.Pizzas.FirstOrDefaultAsync(p => p.Id == pizzaDto.Id);
+
+                var category = await context.Categories.FirstOrDefaultAsync(c => c.Id == pizzaDto.CategoryId);
+                var size = await context.Size.FirstOrDefaultAsync(c => c.Id == pizzaDto.SizeId);
+                var ingredients = await context.Ingredients
+                                    .Where(i => pizzaDto.IngredientsId.Contains(i.Id))
+                                    .ToListAsync();
+
+                updatedPizza.Size = size;
+                updatedPizza.SizeId = pizzaDto.SizeId;
+                updatedPizza.Category = category;
+                updatedPizza.CategoryId = pizzaDto.CategoryId;
+                updatedPizza.Name = pizzaDto.Name;
+                updatedPizza.Description = pizzaDto.Description;
+                updatedPizza.Price = pizzaDto.Price;
+
+                updatedPizza.Ingredients.Clear();
+
+                // Add new ingredients
+                foreach (var ingredient in ingredients)
+                {
+                    updatedPizza.Ingredients.Add(ingredient);
+                }
+
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

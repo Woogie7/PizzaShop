@@ -1,6 +1,6 @@
-﻿using PizzaShop.Domain.Enum;
+﻿using PizzaShop.Application.Interface;
+using PizzaShop.Domain.Enum;
 using PizzaShop.WPF.Core;
-using PizzaShop.WPF.Service;
 using PizzaShop.WPF.VIewModel;
 using System;
 using System.Collections.Generic;

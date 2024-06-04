@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PizzaShop.Application.DTOs;
-using PizzaShop.Application.DTOs.Pizza;
-using PizzaShop.Application.DTOs.User;
+using PizzaShop.Application.Interface;
 using PizzaShop.Application.Interface.Repository;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Persistence.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PizzaShop.Persistence.Repositories
 {
@@ -19,18 +13,20 @@ namespace PizzaShop.Persistence.Repositories
         private readonly IMapper _mapper;
 
         private readonly PizzaShopDbContextFactory _contextFactory;
+        private readonly IAuthenticator _authenticator;
 
-        public OrderRepository(PizzaShopDbContextFactory contextFactory, IMapper mapper)
+        public OrderRepository(PizzaShopDbContextFactory contextFactory, IMapper mapper, IAuthenticator authenticator)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;
+            _authenticator = authenticator;
         }
 
         public async Task IncreaseQuantity(OrderDto orderDto)
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
-                var order = await context.Orders.FirstOrDefaultAsync(p => p.Id == orderDto.Id);
+                var order = await context.Orders.FirstOrDefaultAsync(p => p.Id == orderDto.Id && p.UserId == _authenticator.CurrentUser.Id);
 
                 order.Quantity++;
 
@@ -42,7 +38,7 @@ namespace PizzaShop.Persistence.Repositories
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
-                var order = await context.Orders.FirstOrDefaultAsync(p => p.Id == orderDto.Id);
+                var order = await context.Orders.FirstOrDefaultAsync(p => p.Id == orderDto.Id && p.UserId == _authenticator.CurrentUser.Id);
 
                 order.Quantity--;
 
@@ -59,6 +55,7 @@ namespace PizzaShop.Persistence.Repositories
                     .AsNoTracking()
                     .Include(p => p.Pizza)
                     .Include(p => p.User)
+                    .Where(p => p.UserId == _authenticator.CurrentUser.Id)
                     .ToListAsync();
 
 
@@ -73,22 +70,22 @@ namespace PizzaShop.Persistence.Repositories
         {
             using (PizzaShopDBContext context = _contextFactory.CreateDbContext())
             {
-                var order = _mapper.Map<Order>(orderDto);
+                var newOrder = _mapper.Map<Order>(orderDto);
 
-                var pizza = await context.Pizzas.FirstOrDefaultAsync(c => c.Id == order.PizzaId);
-                var user = await context.Users.FirstOrDefaultAsync(c => c.Id == order.UserId);
+                var pizza = await context.Pizzas.FirstOrDefaultAsync(c => c.Id == newOrder.PizzaId);
+                var user = await context.Users.FirstOrDefaultAsync(c => c.Id == _authenticator.CurrentUser.Id);
 
-                order.Pizza = pizza;
-                order.User = user;
+                newOrder.Pizza = pizza;
+                newOrder.User = user;
 
-                var findOrder = await context.Orders.FirstOrDefaultAsync(p => p.PizzaId == order.PizzaId);
-                if(findOrder != null)
+                var findOrder = await context.Orders.FirstOrDefaultAsync(p => p.PizzaId == newOrder.PizzaId && p.UserId == _authenticator.CurrentUser.Id);
+                if (findOrder != null)
                 {
                     findOrder.Quantity++;
                 }
                 else
                 {
-                    await context.Orders.AddAsync(order);
+                    await context.Orders.AddAsync(newOrder);
                 }
 
                 await context.SaveChangesAsync();
