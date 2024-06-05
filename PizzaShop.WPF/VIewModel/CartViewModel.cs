@@ -63,7 +63,7 @@ namespace PizzaShop.WPF.VIewModel
         public void UpdateTotals()
         {
             SumQuantity = Orders.Sum(order => order.Quantity);
-            SumTotalAmount = Orders.Sum(order => order.TotalPrice);
+            SumTotalAmount = Orders.Sum(order => order.Quantity * order.TotalPrice);
         }
     }
 

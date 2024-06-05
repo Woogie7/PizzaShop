@@ -18,7 +18,7 @@ namespace PizzaShop.WPF.View
     /// <summary>
     /// Interaction logic for ReportView.xaml
     /// </summary>
-    public partial class ReportView : UserControl
+    public partial class ReportView : Window
     {
         public ReportView()
         {

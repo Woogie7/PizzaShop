@@ -114,7 +114,6 @@ namespace PizzaShop.Persistence.Repositories
 
                 updatedPizza.Ingredients.Clear();
 
-                // Add new ingredients
                 foreach (var ingredient in ingredients)
                 {
                     updatedPizza.Ingredients.Add(ingredient);
